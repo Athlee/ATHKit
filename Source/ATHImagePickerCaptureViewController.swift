@@ -48,13 +48,15 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     
     fileprivate var flashMode: AVCaptureFlashMode = .on {
         didSet {
+            let bundle = Bundle(for: self.classForCoder)
+            
             switch flashMode {
             case .on:
-                flashButton.setImage(UIImage(named: "Flash"), for: UIControlState())
+                flashButton.setImage(UIImage(named: "Flash", in: bundle, compatibleWith: nil), for: UIControlState())
             case .off:
-                flashButton.setImage(UIImage(named: "FlashOff"), for: UIControlState())
+                flashButton.setImage(UIImage(named: "FlashOff", in: bundle, compatibleWith: nil), for: UIControlState())
             case .auto:
-                flashButton.setImage(UIImage(named: "FlashAuto"), for: UIControlState())
+                flashButton.setImage(UIImage(named: "FlashAuto", in: bundle, compatibleWith: nil), for: UIControlState())
             }
             
             setFlashMode(flashMode)

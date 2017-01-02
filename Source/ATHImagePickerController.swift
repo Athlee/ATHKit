@@ -68,8 +68,8 @@ open class ATHImagePickerController: UINavigationController, ATHImagePickerCommi
     override open func viewDidLoad() {
         super.viewDidLoad()
         
-        // TODO: Figure out how to work with that within a cocoa pod
-        let storyboard = UIStoryboard(name: "ATHImagePickerController", bundle: nil)
+        let bundle = Bundle(for: self.classForCoder)
+        let storyboard = UIStoryboard(name: "ATHImagePickerController", bundle: bundle)
         
         var controllers: [UIViewController] = []
         
