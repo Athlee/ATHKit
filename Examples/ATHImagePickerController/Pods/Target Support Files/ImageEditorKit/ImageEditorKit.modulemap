@@ -1,0 +1,6 @@
+framework module ImageEditorKit {
+  umbrella header "ImageEditorKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

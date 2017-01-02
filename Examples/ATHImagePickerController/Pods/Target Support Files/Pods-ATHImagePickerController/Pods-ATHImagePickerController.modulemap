@@ -1,0 +1,6 @@
+framework module Pods_ATHImagePickerController {
+  umbrella header "Pods-ATHImagePickerController-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,20 @@
+PODS:
+  - ImageEditorKit (0.2.0)
+  - ImagePickerKit (0.2.5)
+  - Material (2.4.6):
+    - Material/Core (= 2.4.6)
+  - Material/Core (2.4.6)
+
+DEPENDENCIES:
+  - ImageEditorKit
+  - ImagePickerKit
+  - Material
+
+SPEC CHECKSUMS:
+  ImageEditorKit: 6e266a0e1c133630326dac63ba5712c9d3b21044
+  ImagePickerKit: e4662c2fd504b6a88bbcb2421e4829dd196a527e
+  Material: 43bd91d61e86ae2b6d6574e28fcb1ed48ff813cb
+
+PODFILE CHECKSUM: dc099ce7dfdcce5f9025d5f682a01f5f85fb4224
+
+COCOAPODS: 1.0.0
