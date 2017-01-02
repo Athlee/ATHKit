@@ -12,8 +12,6 @@ class ViewController: UIViewController, ATHImagePickerControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     
@@ -28,7 +26,6 @@ class ViewController: UIViewController, ATHImagePickerControllerDelegate {
     }
     
     func imagePickerController(_ picker: ATHImagePickerController, didCancelWithItem item: ATHImagePickerItem) {
-        print("Item is nil=\(item.image == nil)")
         picker.dismiss(animated: true, completion: nil)
         
         DispatchQueue.main.async {
