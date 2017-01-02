@@ -28,17 +28,6 @@ public protocol PreviewController: FloatingViewLayout {
     var image: UIImage? { get set }
 }
 
-internal extension UIView {
-    func snapshot() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0)
-        drawHierarchy(in: bounds, afterScreenUpdates: false)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return image!
-    }
-}
-
 open class ATHImagePickerPreviewViewController: UIViewController, EmbededController, PreviewController, Cropable {
     
     // MARK: - Outlets 

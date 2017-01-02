@@ -8,37 +8,43 @@
 
 /* Begin PBXBuildFile section */
 		043A25101E19B1C8004E638F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A250F1E19B1C8004E638F /* ViewController.swift */; };
-		045DADF51E19A3E70009D234 /* ATHImagePickerTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045DADF41E19A3E70009D234 /* ATHImagePickerTabBarController.swift */; };
+		043A25161E19F7B7004E638F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 043A25151E19F7B7004E638F /* Main.storyboard */; };
+		043A25221E19F85F004E638F /* ATHImagePickerAssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A25181E19F85F004E638F /* ATHImagePickerAssetsViewController.swift */; };
+		043A25231E19F85F004E638F /* ATHImagePickerCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A25191E19F85F004E638F /* ATHImagePickerCaptureViewController.swift */; };
+		043A25241E19F85F004E638F /* ATHImagePickerController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A251A1E19F85F004E638F /* ATHImagePickerController+Extensions.swift */; };
+		043A25251E19F85F004E638F /* ATHImagePickerController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 043A251B1E19F85F004E638F /* ATHImagePickerController.storyboard */; };
+		043A25261E19F860004E638F /* ATHImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A251C1E19F85F004E638F /* ATHImagePickerController.swift */; };
+		043A25271E19F860004E638F /* ATHImagePickerPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A251D1E19F85F004E638F /* ATHImagePickerPreviewViewController.swift */; };
+		043A25281E19F860004E638F /* ATHImagePickerSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A251E1E19F85F004E638F /* ATHImagePickerSelectionViewController.swift */; };
+		043A25291E19F860004E638F /* ATHImagePickerTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A251F1E19F85F004E638F /* ATHImagePickerTabBarController.swift */; };
+		043A252A1E19F860004E638F /* ATHNavigationBarHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A25201E19F85F004E638F /* ATHNavigationBarHandler.swift */; };
+		043A252B1E19F860004E638F /* ATHPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043A25211E19F85F004E638F /* ATHPhotoCell.swift */; };
 		048E218F1E187DEA00A83402 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048E218E1E187DEA00A83402 /* AppDelegate.swift */; };
-		048E21941E187DEA00A83402 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 048E21921E187DEA00A83402 /* Main.storyboard */; };
 		048E21961E187DEA00A83402 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 048E21951E187DEA00A83402 /* Assets.xcassets */; };
 		048E21991E187DEA00A83402 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 048E21971E187DEA00A83402 /* LaunchScreen.storyboard */; };
-		04D92C1C1E1975C400D3F2FB /* ATHImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D92C1B1E1975C400D3F2FB /* ATHImagePickerController.swift */; };
-		04D92C201E1977E200D3F2FB /* ATHImagePickerSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D92C1F1E1977E200D3F2FB /* ATHImagePickerSelectionViewController.swift */; };
-		04D92C221E1977F100D3F2FB /* ATHImagePickerPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D92C211E1977F100D3F2FB /* ATHImagePickerPreviewViewController.swift */; };
-		04D92C241E19781100D3F2FB /* ATHImagePickerAssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D92C231E19781100D3F2FB /* ATHImagePickerAssetsViewController.swift */; };
-		04D92C281E19868A00D3F2FB /* ATHPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D92C271E19868A00D3F2FB /* ATHPhotoCell.swift */; };
-		04D92C2C1E199BF600D3F2FB /* ATHImagePickerCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D92C2B1E199BF600D3F2FB /* ATHImagePickerCaptureViewController.swift */; };
 		9C1D374E04353CA7B7C1EEC7 /* Pods_ATHImagePickerController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0C48849A76438BDA1D0D5B9 /* Pods_ATHImagePickerController.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		043A250F1E19B1C8004E638F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		045DADF41E19A3E70009D234 /* ATHImagePickerTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerTabBarController.swift; sourceTree = "<group>"; };
+		043A25151E19F7B7004E638F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		043A25181E19F85F004E638F /* ATHImagePickerAssetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerAssetsViewController.swift; sourceTree = "<group>"; };
+		043A25191E19F85F004E638F /* ATHImagePickerCaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerCaptureViewController.swift; sourceTree = "<group>"; };
+		043A251A1E19F85F004E638F /* ATHImagePickerController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ATHImagePickerController+Extensions.swift"; sourceTree = "<group>"; };
+		043A251B1E19F85F004E638F /* ATHImagePickerController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ATHImagePickerController.storyboard; sourceTree = "<group>"; };
+		043A251C1E19F85F004E638F /* ATHImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerController.swift; sourceTree = "<group>"; };
+		043A251D1E19F85F004E638F /* ATHImagePickerPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerPreviewViewController.swift; sourceTree = "<group>"; };
+		043A251E1E19F85F004E638F /* ATHImagePickerSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerSelectionViewController.swift; sourceTree = "<group>"; };
+		043A251F1E19F85F004E638F /* ATHImagePickerTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerTabBarController.swift; sourceTree = "<group>"; };
+		043A25201E19F85F004E638F /* ATHNavigationBarHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHNavigationBarHandler.swift; sourceTree = "<group>"; };
+		043A25211E19F85F004E638F /* ATHPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHPhotoCell.swift; sourceTree = "<group>"; };
 		048E218B1E187DEA00A83402 /* ATHImagePickerController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ATHImagePickerController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		048E218E1E187DEA00A83402 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		048E21931E187DEA00A83402 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		048E21951E187DEA00A83402 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		048E21981E187DEA00A83402 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		048E219A1E187DEA00A83402 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		048E21A31E187DEA00A83402 /* ATHImagePickerControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATHImagePickerControllerTests.swift; sourceTree = "<group>"; };
 		048E21A51E187DEA00A83402 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04D92C1B1E1975C400D3F2FB /* ATHImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerController.swift; sourceTree = "<group>"; };
-		04D92C1F1E1977E200D3F2FB /* ATHImagePickerSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerSelectionViewController.swift; sourceTree = "<group>"; };
-		04D92C211E1977F100D3F2FB /* ATHImagePickerPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerPreviewViewController.swift; sourceTree = "<group>"; };
-		04D92C231E19781100D3F2FB /* ATHImagePickerAssetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerAssetsViewController.swift; sourceTree = "<group>"; };
-		04D92C271E19868A00D3F2FB /* ATHPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHPhotoCell.swift; sourceTree = "<group>"; };
-		04D92C2B1E199BF600D3F2FB /* ATHImagePickerCaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATHImagePickerCaptureViewController.swift; sourceTree = "<group>"; };
 		583CAE7BC9B7DF923C570E1D /* Pods_ATHImagePickerControllerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ATHImagePickerControllerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		832029FD224B1DC22257B143 /* Pods-ATHImagePickerController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ATHImagePickerController.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ATHImagePickerController/Pods-ATHImagePickerController.debug.xcconfig"; sourceTree = "<group>"; };
 		8810FE84449F1675BADA3023 /* Pods-ATHImagePickerControllerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ATHImagePickerControllerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ATHImagePickerControllerTests/Pods-ATHImagePickerControllerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -59,9 +65,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		043A25171E19F85F004E638F /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				043A25181E19F85F004E638F /* ATHImagePickerAssetsViewController.swift */,
+				043A25191E19F85F004E638F /* ATHImagePickerCaptureViewController.swift */,
+				043A251A1E19F85F004E638F /* ATHImagePickerController+Extensions.swift */,
+				043A251B1E19F85F004E638F /* ATHImagePickerController.storyboard */,
+				043A251C1E19F85F004E638F /* ATHImagePickerController.swift */,
+				043A251D1E19F85F004E638F /* ATHImagePickerPreviewViewController.swift */,
+				043A251E1E19F85F004E638F /* ATHImagePickerSelectionViewController.swift */,
+				043A251F1E19F85F004E638F /* ATHImagePickerTabBarController.swift */,
+				043A25201E19F85F004E638F /* ATHNavigationBarHandler.swift */,
+				043A25211E19F85F004E638F /* ATHPhotoCell.swift */,
+			);
+			name = Source;
+			path = ../../Source;
+			sourceTree = "<group>";
+		};
 		048E21821E187DEA00A83402 = {
 			isa = PBXGroup;
 			children = (
+				043A25171E19F85F004E638F /* Source */,
 				048E218D1E187DEA00A83402 /* ATHImagePickerController */,
 				048E21A21E187DEA00A83402 /* ATHImagePickerControllerTests */,
 				048E218C1E187DEA00A83402 /* Products */,
@@ -82,11 +107,10 @@
 			isa = PBXGroup;
 			children = (
 				04D92C2A1E19870100D3F2FB /* Support */,
-				04D92C251E19864800D3F2FB /* Views */,
-				048E21AE1E1964E400A83402 /* Controllers */,
 				048E218E1E187DEA00A83402 /* AppDelegate.swift */,
 				043A250F1E19B1C8004E638F /* ViewController.swift */,
 				048E21971E187DEA00A83402 /* LaunchScreen.storyboard */,
+				043A25151E19F7B7004E638F /* Main.storyboard */,
 				048E219A1E187DEA00A83402 /* Info.plist */,
 			);
 			path = ATHImagePickerController;
@@ -99,44 +123,6 @@
 				048E21A51E187DEA00A83402 /* Info.plist */,
 			);
 			path = ATHImagePickerControllerTests;
-			sourceTree = "<group>";
-		};
-		048E21AE1E1964E400A83402 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				04D92C1B1E1975C400D3F2FB /* ATHImagePickerController.swift */,
-				045DADF41E19A3E70009D234 /* ATHImagePickerTabBarController.swift */,
-				04D92C1F1E1977E200D3F2FB /* ATHImagePickerSelectionViewController.swift */,
-				04D92C211E1977F100D3F2FB /* ATHImagePickerPreviewViewController.swift */,
-				04D92C231E19781100D3F2FB /* ATHImagePickerAssetsViewController.swift */,
-				04D92C2B1E199BF600D3F2FB /* ATHImagePickerCaptureViewController.swift */,
-			);
-			name = Controllers;
-			sourceTree = "<group>";
-		};
-		04D92C251E19864800D3F2FB /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				04D92C291E1986EF00D3F2FB /* Storyboards */,
-				04D92C261E19865000D3F2FB /* Cells */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		04D92C261E19865000D3F2FB /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				04D92C271E19868A00D3F2FB /* ATHPhotoCell.swift */,
-			);
-			name = Cells;
-			sourceTree = "<group>";
-		};
-		04D92C291E1986EF00D3F2FB /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				048E21921E187DEA00A83402 /* Main.storyboard */,
-			);
-			name = Storyboards;
 			sourceTree = "<group>";
 		};
 		04D92C2A1E19870100D3F2FB /* Support */ = {
@@ -231,9 +217,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043A25251E19F85F004E638F /* ATHImagePickerController.storyboard in Resources */,
 				048E21991E187DEA00A83402 /* LaunchScreen.storyboard in Resources */,
 				048E21961E187DEA00A83402 /* Assets.xcassets in Resources */,
-				048E21941E187DEA00A83402 /* Main.storyboard in Resources */,
+				043A25161E19F7B7004E638F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,29 +279,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04D92C1C1E1975C400D3F2FB /* ATHImagePickerController.swift in Sources */,
-				04D92C241E19781100D3F2FB /* ATHImagePickerAssetsViewController.swift in Sources */,
-				04D92C201E1977E200D3F2FB /* ATHImagePickerSelectionViewController.swift in Sources */,
+				043A252B1E19F860004E638F /* ATHPhotoCell.swift in Sources */,
 				043A25101E19B1C8004E638F /* ViewController.swift in Sources */,
-				04D92C281E19868A00D3F2FB /* ATHPhotoCell.swift in Sources */,
-				04D92C2C1E199BF600D3F2FB /* ATHImagePickerCaptureViewController.swift in Sources */,
-				045DADF51E19A3E70009D234 /* ATHImagePickerTabBarController.swift in Sources */,
+				043A25281E19F860004E638F /* ATHImagePickerSelectionViewController.swift in Sources */,
+				043A252A1E19F860004E638F /* ATHNavigationBarHandler.swift in Sources */,
+				043A25271E19F860004E638F /* ATHImagePickerPreviewViewController.swift in Sources */,
+				043A25231E19F85F004E638F /* ATHImagePickerCaptureViewController.swift in Sources */,
 				048E218F1E187DEA00A83402 /* AppDelegate.swift in Sources */,
-				04D92C221E1977F100D3F2FB /* ATHImagePickerPreviewViewController.swift in Sources */,
+				043A25261E19F860004E638F /* ATHImagePickerController.swift in Sources */,
+				043A25221E19F85F004E638F /* ATHImagePickerAssetsViewController.swift in Sources */,
+				043A25241E19F85F004E638F /* ATHImagePickerController+Extensions.swift in Sources */,
+				043A25291E19F860004E638F /* ATHImagePickerTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		048E21921E187DEA00A83402 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				048E21931E187DEA00A83402 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		048E21971E187DEA00A83402 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

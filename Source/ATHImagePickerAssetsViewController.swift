@@ -10,22 +10,6 @@ import UIKit
 import Photos
 import ImagePickerKit
 
-internal extension UICollectionView {
-    func indexPaths(for rect: CGRect) -> [IndexPath] {
-        guard let allLayoutAttributes = collectionViewLayout.layoutAttributesForElements(in: rect) else {
-            return []
-        }
-        
-        guard allLayoutAttributes.count > 0 else {
-            return []
-        }
-        
-        let indexPaths = allLayoutAttributes.map { $0.indexPath }
-        
-        return indexPaths
-    }
-}
-
 public protocol AssetsController: class {
     var offset: CGPoint { get set }
 }
