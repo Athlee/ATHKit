@@ -56,7 +56,7 @@ open class ATHImagePickerTabBarController: PageTabBarController {
     // MARK: - Setup utils
     
     fileprivate func setupConfig() {
-        guard let config = commiterDelegate?.commit(controller: self, forSourceType: []) else {
+        guard let config = commiterDelegate?.commit(configFor: []) else {
             return
         }
         

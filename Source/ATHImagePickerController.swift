@@ -27,7 +27,7 @@ public struct ATHImagePickerColor {
 public protocol ATHImagePickerCommiterDelegate: class {
     func commit(item: ATHImagePickerItem)
     func commit(error: ATHImagePickerError?)
-    func commit(controller: UIViewController, forSourceType sourceType: ATHImagePickerSourceType) -> ATHImagePickerPageConfig
+    func commit(configFor sourceType: ATHImagePickerSourceType) -> ATHImagePickerPageConfig
 }
 
 public struct ATHImagePickerSourceType: OptionSet {
@@ -52,6 +52,7 @@ public enum ATHImagePickerError {
 public protocol ATHImagePickerControllerDelegate: class {
     func imagePickerController(_ picker: ATHImagePickerController, didCancelWithItem item: ATHImagePickerItem)
     func imagePickerController(_ picker: ATHImagePickerController, didCancelWithError error: ATHImagePickerError?)
+    func imagePickerController(_ picker: ATHImagePickerController, configFor sourceType: ATHImagePickerSourceType) -> ATHImagePickerPageConfig
 }
 
 public struct ATHImagePickerPageConfig {
@@ -171,40 +172,11 @@ open class ATHImagePickerController: UINavigationController, ATHImagePickerCommi
         pickerDelegate?.imagePickerController(self, didCancelWithError: error)
     }
     
-    public func commit(controller: UIViewController, forSourceType sourceType: ATHImagePickerSourceType) -> ATHImagePickerPageConfig {
-        switch sourceType {
-        case ATHImagePickerSourceType.camera:
-            return ATHImagePickerPageConfig(
-                leftButtonTitle: "Cancel",
-                rightButtonTitle: "Next",
-                leftButtonImage: nil,
-                rightButtonImage: nil,
-                title: "Camera",
-                titleColor: Color.tin,
-                leftButtonColor: Color.blue,
-                rightButtonColor: Color.blue)
-            
-        case ATHImagePickerSourceType.library:
-            return ATHImagePickerPageConfig(
-                leftButtonTitle: "Cancel",
-                rightButtonTitle: "Next",
-                leftButtonImage: nil,
-                rightButtonImage: nil,
-                title: "Photos",
-                titleColor: Color.black,
-                leftButtonColor: Color.blue,
-                rightButtonColor: Color.blue)
-            
-        default:
-            return ATHImagePickerPageConfig(
-                leftButtonTitle: "Cancel",
-                rightButtonTitle: "Next",
-                leftButtonImage: nil,
-                rightButtonImage: nil,
-                title: "Photos",
-                titleColor: Color.black,
-                leftButtonColor: Color.blue,
-                rightButtonColor: Color.blue)
+    public func commit(configFor sourceType: ATHImagePickerSourceType) -> ATHImagePickerPageConfig {
+        guard let delegate = pickerDelegate else {
+            fatalError("Could not load a config from delegate!")
         }
+        
+        return delegate.imagePickerController(self, configFor: sourceType)
     }
 }

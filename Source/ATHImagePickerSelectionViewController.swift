@@ -93,7 +93,7 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
     // MARK: - Setup utils 
     
     fileprivate func setupConfig() {
-        guard let config = commiterDelegate?.commit(controller: self, forSourceType: .library) else {
+        guard let config = commiterDelegate?.commit(configFor: .library) else {
             return
         }
         

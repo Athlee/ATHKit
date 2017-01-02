@@ -114,7 +114,7 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     // MARK: - Setup utils
     
     fileprivate func setupConfig() {
-        guard let config = commiterDelegate?.commit(controller: self, forSourceType: .camera) else {
+        guard let config = commiterDelegate?.commit(configFor: .camera) else {
             return
         }
         
@@ -124,6 +124,7 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
         pageTabBarItem.titleColor = config.titleColor
         pageTabBarItem.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
     }
+    
     
     // MARK: - IBActions
     
