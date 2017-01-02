@@ -1,0 +1,6 @@
+framework module ATHKit {
+  umbrella header "ATHKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
