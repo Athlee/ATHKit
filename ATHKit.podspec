@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name                  = "ATHKit"
-s.version               = "0.0.2"
+s.version               = "0.0.4"
 s.summary               = "ATHKit is a collection of customizable UI components such as ImagePickerController and more."
 s.homepage              = "https://github.com/Athlee/ATHKit"
 s.license               = { :type => "MIT", :file => "LICENSE" }
@@ -11,12 +11,7 @@ s.platform              = :ios, "9.0"
 s.ios.deployment_target = "9.0"
 s.source                = { :git => "https://github.com/Athlee/ATHKit.git", :tag => s.version }
 s.source_files          = "Source/*.swift"
-#s.resources             = "Source/*.{lproj,storyboard,xcassets}"
-
-s.resource_bundle = {
-'Paramount' => ['Sources/Paramount.bundle/*.png']
-}
-
+s.resources             = "Source/*.{storyboard,xcassets}"
 s.requires_arc          = true
 
 s.dependency "Material"
