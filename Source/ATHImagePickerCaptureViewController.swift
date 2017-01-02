@@ -65,8 +65,21 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     
     fileprivate var queue = OperationQueue()
     
-    internal weak var commiterDelegate: ATHImagePickerCommiterDelegate?
+    internal weak var commiterDelegate: ATHImagePickerCommiterDelegate? {
+        didSet {
+            setupConfig()
+        }
+    }
+    
     fileprivate let handler = ATHNavigationBarHandler()
+    
+    fileprivate var config: ATHImagePickerPageConfig! {
+        didSet {
+            handler.setupItem(navigationItem, config: config, ignoreRight: true, leftHandler: { [weak self] in
+                self?.commiterDelegate?.commit(item: ATHImagePickerItem(image: nil))
+            }, rightHandler: nil)
+        }
+    }
     
     // MARK: - Life cycle
     
@@ -80,12 +93,6 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ATHImagePickerCaptureViewController.recognizedTapGesture(_:)))
         previewViewContainer.addGestureRecognizer(tapRecognizer)
-        
-        handler.setupItem(navigationItem, ignoreRight: true, leftHandler: { [weak self] in
-            self?.commiterDelegate?.commit(item: ATHImagePickerItem(image: nil))
-        }, rightHandler: nil)
-        
-        title = "Camera"
     }
     
     override public func viewDidLayoutSubviews() {
@@ -102,6 +109,20 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         pageTabBarItem.titleColor = Color.tin
+    }
+    
+    // MARK: - Setup utils
+    
+    fileprivate func setupConfig() {
+        guard let config = commiterDelegate?.commit(controller: self, forSourceType: .camera) else {
+            return
+        }
+        
+        self.config = config
+        
+        pageTabBarItem.title = config.title
+        pageTabBarItem.titleColor = config.titleColor
+        pageTabBarItem.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
     }
     
     // MARK: - IBActions

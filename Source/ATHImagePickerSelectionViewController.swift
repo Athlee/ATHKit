@@ -44,21 +44,28 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
         }
     }
     
-    internal weak var commiterDelegate: ATHImagePickerCommiterDelegate?
+    internal weak var commiterDelegate: ATHImagePickerCommiterDelegate? {
+        didSet {
+            setupConfig()
+        }
+    }
+    
     fileprivate let handler = ATHNavigationBarHandler()
+    
+    fileprivate var config: ATHImagePickerPageConfig! {
+        didSet {
+            handler.setupItem(navigationItem, config: config, ignoreRight: false, leftHandler: { [weak self] in
+                self?.commiterDelegate?.commit(item: ATHImagePickerItem(image: nil))
+            }) { [weak self] in
+                self?.commiterDelegate?.commit(item: ATHImagePickerItem(image: self?.floatingView.snapshot()))
+            }
+        }
+    }
     
     // MARK: - Life cycle 
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        
-        handler.setupItem(navigationItem, ignoreRight: false, leftHandler: { [weak self] in
-            self?.commiterDelegate?.commit(item: ATHImagePickerItem(image: nil))
-        }) { [weak self] in
-            self?.commiterDelegate?.commit(item: ATHImagePickerItem(image: self?.floatingView.snapshot()))
-        }
-        
-        title = "Photos"
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -81,6 +88,21 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
                 self.assetsController = assetsController
             }
         }
+    }
+    
+    // MARK: - Setup utils 
+    
+    fileprivate func setupConfig() {
+        guard let config = commiterDelegate?.commit(controller: self, forSourceType: .library) else {
+            return
+        }
+        
+        self.config = config
+        
+        title = config.title
+        pageTabBarItem.title = config.title
+        pageTabBarItem.titleColor = config.titleColor
+        pageTabBarItem.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
     }
     
     // MARK: - SelectionController

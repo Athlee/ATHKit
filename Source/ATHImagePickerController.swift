@@ -12,20 +12,23 @@ import UIKit
 // MARK: - Internal helpers' protocols 
 //
 
-internal struct Color {
-    static let black = UIColor.black
-    static let tin = UIColor(hex: 0x7F7F7F)
-    static let blue = UIColor(hex: 0x007AFF)
-}
-
-internal protocol ATHImagePickerCommiterDelegate: class {
-    func commit(item: ATHImagePickerItem)
-    func commit(error: ATHImagePickerError?)
-}
+internal typealias Color = ATHImagePickerColor
 
 //
 // MARK: - `ATHImagePickerController` public components
 //
+
+public struct ATHImagePickerColor {
+    public static let black = UIColor.black
+    public static let tin = UIColor(hex: 0x7F7F7F)
+    public static let blue = UIColor(hex: 0x007AFF)
+}
+
+public protocol ATHImagePickerCommiterDelegate: class {
+    func commit(item: ATHImagePickerItem)
+    func commit(error: ATHImagePickerError?)
+    func commit(controller: UIViewController, forSourceType sourceType: ATHImagePickerSourceType) -> ATHImagePickerPageConfig
+}
 
 public struct ATHImagePickerSourceType: OptionSet {
     public static let library = ATHImagePickerSourceType(rawValue: 1 << 0)
@@ -49,6 +52,35 @@ public enum ATHImagePickerError {
 public protocol ATHImagePickerControllerDelegate: class {
     func imagePickerController(_ picker: ATHImagePickerController, didCancelWithItem item: ATHImagePickerItem)
     func imagePickerController(_ picker: ATHImagePickerController, didCancelWithError error: ATHImagePickerError?)
+}
+
+public struct ATHImagePickerPageConfig {
+    public let leftButtonTitle: String
+    public let rightButtonTitle: String
+    public let leftButtonImage: UIImage?
+    public let rightButtonImage: UIImage?
+    public let title: String
+    public let titleColor: UIColor
+    public let leftButtonColor: UIColor
+    public let rightButtonColor: UIColor
+    
+    public init(leftButtonTitle: String,
+                rightButtonTitle: String,
+                leftButtonImage: UIImage?,
+                rightButtonImage: UIImage?,
+                title: String,
+                titleColor: UIColor,
+                leftButtonColor: UIColor,
+                rightButtonColor: UIColor) {
+        self.leftButtonTitle = leftButtonTitle
+        self.rightButtonTitle = rightButtonTitle
+        self.leftButtonImage = leftButtonImage
+        self.rightButtonImage = rightButtonImage
+        self.title = title
+        self.titleColor = titleColor
+        self.leftButtonColor = leftButtonColor
+        self.rightButtonColor = rightButtonColor
+    }
 }
 
 open class ATHImagePickerController: UINavigationController, ATHImagePickerCommiterDelegate {
@@ -75,9 +107,6 @@ open class ATHImagePickerController: UINavigationController, ATHImagePickerCommi
         
         if sourceType.contains(.library) {
             let selectionViewController = storyboard.instantiateViewController(withIdentifier: ATHImagePickerSelectionViewController.identifier) as! ATHImagePickerSelectionViewController
-            selectionViewController.pageTabBarItem.title = "Photos"
-            selectionViewController.pageTabBarItem.titleColor = Color.black
-            selectionViewController.pageTabBarItem.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
             selectionViewController.commiterDelegate = self
             
             controllers += [selectionViewController]
@@ -85,9 +114,6 @@ open class ATHImagePickerController: UINavigationController, ATHImagePickerCommi
         
         if sourceType.contains(.camera) {
             let captureViewController = storyboard.instantiateViewController(withIdentifier: ATHImagePickerCaptureViewController.identifier) as! ATHImagePickerCaptureViewController
-            captureViewController.pageTabBarItem.title = "Camera"
-            captureViewController.pageTabBarItem.titleColor = Color.tin
-            captureViewController.pageTabBarItem.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
             captureViewController.commiterDelegate = self
             
             controllers += [captureViewController]
@@ -95,8 +121,7 @@ open class ATHImagePickerController: UINavigationController, ATHImagePickerCommi
         
         if sourceType.contains([.camera, .library]) {
             let controller = ATHImagePickerTabBarController(viewControllers: controllers)
-            controller.commiterDelegate = self 
-            controller.title = "Photo"
+            controller.commiterDelegate = self
             
             setViewControllers([controller], animated: false)
         } else {
@@ -104,13 +129,82 @@ open class ATHImagePickerController: UINavigationController, ATHImagePickerCommi
         }
     }
     
+    // MARK: - Static members 
+    
+    open static func createdChild(sourceType: ATHImagePickerSourceType, delegate: ATHImagePickerCommiterDelegate) -> UIViewController? {
+        let bundle = Bundle(for: ATHImagePickerController.self.classForCoder())
+        let storyboard = UIStoryboard(name: "ATHImagePickerController", bundle: bundle)
+        
+        var controllers: [UIViewController] = []
+        
+        if sourceType.contains(.library) {
+            let selectionViewController = storyboard.instantiateViewController(withIdentifier: ATHImagePickerSelectionViewController.identifier) as! ATHImagePickerSelectionViewController
+            selectionViewController.commiterDelegate = delegate
+            
+            controllers += [selectionViewController]
+        }
+        
+        if sourceType.contains(.camera) {
+            let captureViewController = storyboard.instantiateViewController(withIdentifier: ATHImagePickerCaptureViewController.identifier) as! ATHImagePickerCaptureViewController
+            captureViewController.commiterDelegate = delegate
+            
+            controllers += [captureViewController]
+        }
+        
+        if sourceType.contains([.camera, .library]) {
+            let controller = ATHImagePickerTabBarController(viewControllers: controllers)
+            controller.commiterDelegate = delegate
+            
+            return controller
+        } else {
+            return controllers.first
+        }
+    }
+    
     // MARK: - ATHImagePickerCommiterDelegate
     
-    internal func commit(item: ATHImagePickerItem) {
+    public func commit(item: ATHImagePickerItem) {
         pickerDelegate?.imagePickerController(self, didCancelWithItem: item)
     }
     
-    internal func commit(error: ATHImagePickerError?) {
+    public func commit(error: ATHImagePickerError?) {
         pickerDelegate?.imagePickerController(self, didCancelWithError: error)
+    }
+    
+    public func commit(controller: UIViewController, forSourceType sourceType: ATHImagePickerSourceType) -> ATHImagePickerPageConfig {
+        switch sourceType {
+        case ATHImagePickerSourceType.camera:
+            return ATHImagePickerPageConfig(
+                leftButtonTitle: "Cancel",
+                rightButtonTitle: "Next",
+                leftButtonImage: nil,
+                rightButtonImage: nil,
+                title: "Camera",
+                titleColor: Color.tin,
+                leftButtonColor: Color.blue,
+                rightButtonColor: Color.blue)
+            
+        case ATHImagePickerSourceType.library:
+            return ATHImagePickerPageConfig(
+                leftButtonTitle: "Cancel",
+                rightButtonTitle: "Next",
+                leftButtonImage: nil,
+                rightButtonImage: nil,
+                title: "Photos",
+                titleColor: Color.black,
+                leftButtonColor: Color.blue,
+                rightButtonColor: Color.blue)
+            
+        default:
+            return ATHImagePickerPageConfig(
+                leftButtonTitle: "Cancel",
+                rightButtonTitle: "Next",
+                leftButtonImage: nil,
+                rightButtonImage: nil,
+                title: "Photos",
+                titleColor: Color.black,
+                leftButtonColor: Color.blue,
+                rightButtonColor: Color.blue)
+        }
     }
 }
