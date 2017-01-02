@@ -11,8 +11,11 @@ s.platform              = :ios, "9.0"
 s.ios.deployment_target = "9.0"
 s.source                = { :git => "https://github.com/Athlee/ATHKit.git", :tag => s.version }
 s.source_files          = "Source/*.swift"
+s.resources             = "Source/*.{lproj,storyboard,xcassets}"
+
 s.requires_arc          = true
 
 s.dependency "Material"
+s.dependency "ImagePickerKit"
 
 end
