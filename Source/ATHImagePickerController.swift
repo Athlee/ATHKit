@@ -14,6 +14,18 @@ import UIKit
 
 internal typealias Color = ATHImagePickerColor
 
+internal protocol StatusBarUpdatable {
+    func updateStatusBar()
+}
+
+extension StatusBarUpdatable where Self: UIViewController {
+    func updateStatusBar() {
+        UIView.animate(withDuration: 0.3) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+}
+
 //
 // MARK: - `ATHImagePickerController` public components
 //
@@ -62,8 +74,12 @@ public struct ATHImagePickerPageConfig {
     public let rightButtonImage: UIImage?
     public let title: String
     public let titleColor: UIColor
+    public let titleInactiveColor: UIColor
     public let leftButtonColor: UIColor
     public let rightButtonColor: UIColor
+    
+    public let isStatusBarHidden: Bool
+    public let statusBarAnimation: UIStatusBarAnimation
     
     public init(leftButtonTitle: String,
                 rightButtonTitle: String,
@@ -71,16 +87,23 @@ public struct ATHImagePickerPageConfig {
                 rightButtonImage: UIImage?,
                 title: String,
                 titleColor: UIColor,
+                titleInactiveColor: UIColor,
                 leftButtonColor: UIColor,
-                rightButtonColor: UIColor) {
+                rightButtonColor: UIColor,
+                isStatusBarHidden: Bool = false,
+                statusBarAnimation: UIStatusBarAnimation = .none) {
         self.leftButtonTitle = leftButtonTitle
         self.rightButtonTitle = rightButtonTitle
         self.leftButtonImage = leftButtonImage
         self.rightButtonImage = rightButtonImage
         self.title = title
         self.titleColor = titleColor
+        self.titleInactiveColor = titleInactiveColor
         self.leftButtonColor = leftButtonColor
         self.rightButtonColor = rightButtonColor
+        
+        self.isStatusBarHidden = isStatusBarHidden
+        self.statusBarAnimation = statusBarAnimation
     }
 }
 
