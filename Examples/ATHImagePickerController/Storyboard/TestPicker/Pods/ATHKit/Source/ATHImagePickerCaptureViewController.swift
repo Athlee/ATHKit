@@ -11,7 +11,7 @@ import Material
 import AVFoundation
 import ImagePickerKit
 
-final public class ATHImagePickerCaptureViewController: UIViewController, PhotoCapturable {
+final public class ATHImagePickerCaptureViewController: UIViewController, PhotoCapturable, StatusBarUpdatable {
 
     // MARK: - Outlets
     
@@ -45,6 +45,14 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     // MARK: Properties
     
     public static let identifier = "ATHImagePickerCaptureViewController"
+    
+    open override var prefersStatusBarHidden: Bool {
+        return isStatusBarHidden
+    }
+    
+    open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return statusBarAnimation
+    }
     
     fileprivate var flashMode: AVCaptureFlashMode = .on {
         didSet {
@@ -81,6 +89,18 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
         }
     }
     
+    fileprivate var isStatusBarHidden: Bool = false {
+        didSet {
+            updateStatusBar()
+        }
+    }
+    
+    fileprivate var statusBarAnimation: UIStatusBarAnimation = .none {
+        didSet {
+            updateStatusBar()
+        }
+    }
+    
     // MARK: - Life cycle
     
     override public func viewDidLoad() {
@@ -103,12 +123,12 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         reloadPreview(previewViewContainer)
-        pageTabBarItem.titleColor = Color.black
+        pageTabBarItem.titleColor = config.titleColor
     }
     
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        pageTabBarItem.titleColor = Color.tin
+        pageTabBarItem.titleColor = config.titleInactiveColor
     }
     
     // MARK: - Setup utils
@@ -121,8 +141,11 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
         self.config = config
         
         pageTabBarItem.title = config.title
-        pageTabBarItem.titleColor = config.titleColor
+        pageTabBarItem.titleColor = view.window != nil ? config.titleColor : config.titleInactiveColor
         pageTabBarItem.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+        
+        isStatusBarHidden = config.isStatusBarHidden
+        statusBarAnimation = config.statusBarAnimation
     }
     
     
