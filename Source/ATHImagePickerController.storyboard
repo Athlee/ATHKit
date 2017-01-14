@@ -14,7 +14,7 @@
         <scene sceneID="PBB-P3-WCA">
             <objects>
                 <navigationController title="Controller" id="aaI-MI-Xgv" customClass="ATHImagePickerController" customModule="ATHKit" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="57y-hm-c2t">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="57y-hm-c2t">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -258,6 +258,7 @@
                     <connections>
                         <outlet property="cameraView" destination="eXC-dj-4qV" id="GbW-nn-rWc"/>
                         <outlet property="flashButton" destination="DnW-ag-ZMd" id="LVL-OQ-lG2"/>
+                        <outlet property="switchButton" destination="OUh-wz-L6o" id="jxT-eu-Bw1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Kt-mY-LQh" userLabel="First Responder" sceneMemberID="firstResponder"/>

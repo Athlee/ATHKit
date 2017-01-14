@@ -17,6 +17,7 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var flashButton: UIButton!
+    @IBOutlet weak var switchButton: UIButton!
     
     // MARK: - Capturable properties
     
@@ -60,11 +61,22 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
             
             switch flashMode {
             case .on:
-                flashButton.setImage(UIImage(named: "Flash", in: bundle, compatibleWith: nil), for: UIControlState())
+                let image = config.assets?.flashOnImage ??
+                    UIImage(named: "Flash", in: bundle, compatibleWith: nil)
+                
+                flashButton.setImage(image, for: .normal)
+                
             case .off:
-                flashButton.setImage(UIImage(named: "FlashOff", in: bundle, compatibleWith: nil), for: UIControlState())
+                let image = config.assets?.flashOffImage ??
+                    UIImage(named: "FlashOff", in: bundle, compatibleWith: nil)
+                
+                flashButton.setImage(image, for: .normal)
+                
             case .auto:
-                flashButton.setImage(UIImage(named: "FlashAuto", in: bundle, compatibleWith: nil), for: UIControlState())
+                let image = config.assets?.flashAutoImage ??
+                    UIImage(named: "FlashAuto", in: bundle, compatibleWith: nil)
+                
+                flashButton.setImage(image, for: .normal)
             }
             
             setFlashMode(flashMode)
@@ -146,6 +158,11 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
         
         isStatusBarHidden = config.isStatusBarHidden
         statusBarAnimation = config.statusBarAnimation
+        
+        let bundle = Bundle(for: self.classForCoder)
+        let image = config.assets?.switchCameraIcon ??
+            UIImage(named: "FlipCamera", in: bundle, compatibleWith: nil)
+        switchButton.setImage(image, for: .normal)
     }
     
     
