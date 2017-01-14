@@ -10,7 +10,7 @@ import UIKit
 import Material
 import ImagePickerKit
 
-open class ATHImagePickerSelectionViewController: UIViewController, SelectionController {
+open class ATHImagePickerSelectionViewController: UIViewController, SelectionController, StatusBarUpdatable {
     
     // MARK: - Outlets 
     
@@ -24,7 +24,11 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
     // MARK: - Properties
     
     open override var prefersStatusBarHidden: Bool {
-        return false
+        return isStatusBarHidden
+    }
+    
+    open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return statusBarAnimation
     }
     
     public weak var previewController: PreviewController?
@@ -62,6 +66,18 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
         }
     }
     
+    fileprivate var isStatusBarHidden: Bool = false {
+        didSet {
+            updateStatusBar()
+        }
+    }
+    
+    fileprivate var statusBarAnimation: UIStatusBarAnimation = .none {
+        didSet {
+            updateStatusBar()
+        }
+    }
+    
     // MARK: - Life cycle 
     
     override open func viewDidLoad() {
@@ -70,12 +86,12 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        pageTabBarItem.titleColor = Color.black
+        pageTabBarItem.titleColor = config.titleColor
     }
     
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        pageTabBarItem.titleColor = Color.tin
+        pageTabBarItem.titleColor = config.titleInactiveColor
     }
     
     open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -101,8 +117,11 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
         
         title = config.title
         pageTabBarItem.title = config.title
-        pageTabBarItem.titleColor = config.titleColor
+        pageTabBarItem.titleColor = view.window != nil ? config.titleColor : config.titleInactiveColor
         pageTabBarItem.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+        
+        isStatusBarHidden = config.isStatusBarHidden
+        statusBarAnimation = config.statusBarAnimation
     }
     
     // MARK: - SelectionController

@@ -96,8 +96,8 @@ open class ATHImagePickerPreviewViewController: UIViewController, EmbededControl
     
     // MARK: - Properties 
     
-    fileprivate var zooming = false
-    fileprivate var checking = false
+    fileprivate var isZooming = false
+    fileprivate var isChecking = false
     fileprivate var addedRecognizers = false
     
     fileprivate var isMoving: Bool = false {
@@ -142,9 +142,38 @@ open class ATHImagePickerPreviewViewController: UIViewController, EmbededControl
             addGestureRecognizers()
         }
     }
+}
+
+// MARK: - IBActions
+
+extension ATHImagePickerPreviewViewController {
+    @IBAction func didRecognizeTap(_ rec: UITapGestureRecognizer) {
+        if state == .folded {
+            restore(view: holder.floatingView, to: .unfolded, animated: true)
+        }
+    }
     
-    // MARK: - Utils 
+    @IBAction func didRecognizeMainPan(_ rec: UIPanGestureRecognizer) {
+        guard !isZooming else { return }
+        
+        if state == .unfolded {
+            allowPanOutside = false
+        }
+        
+        receivePanGesture(recognizer: rec, with: holder.floatingView)
+        
+        updatePhotoCollectionViewScrolling()
+    }
     
+    @IBAction func didRecognizeCheckPan(_ rec: UIPanGestureRecognizer) {
+        guard !isZooming else { return }
+        allowPanOutside = true
+    }
+}
+
+// MARK: - Utils
+
+extension ATHImagePickerPreviewViewController {
     fileprivate func addGestureRecognizers() {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(ATHImagePickerPreviewViewController.didRecognizeMainPan(_:)))
         parent?.view.addGestureRecognizer(pan)
@@ -166,38 +195,40 @@ open class ATHImagePickerPreviewViewController: UIViewController, EmbededControl
         }
     }
     
-    // MARK: - IBActions
-    
-    @IBAction func didRecognizeTap(_ rec: UITapGestureRecognizer) {
-        if state == .folded {
-            restore(view: holder.floatingView, to: .unfolded, animated: true)
-        }
-    }
-    
-    @IBAction func didRecognizeMainPan(_ rec: UIPanGestureRecognizer) {
-        guard !zooming else { return }
-        
-        if state == .unfolded {
-            allowPanOutside = false
-        }
-        
-        receivePanGesture(recognizer: rec, with: holder.floatingView)
-        
-        updatePhotoCollectionViewScrolling()
-    }
-    
-    @IBAction func didRecognizeCheckPan(_ rec: UIPanGestureRecognizer) {
-        guard !zooming else { return }
-        
-        if state == .moved && rec.state != .ended {
-            isMoving = true
+    fileprivate func updateCropViewScrolling() {
+        if state == .moved {
+            delegate.isEnabled = false
         } else {
-            isMoving = false
+            delegate.isEnabled = true
         }
-        
-        allowPanOutside = true
     }
 }
+
+// MARK: - FloatingViewLayout
+
+extension ATHImagePickerPreviewViewController {
+    public func prepareForMovement() {
+        updateCropViewScrolling()
+    }
+    
+    public func didEndMoving() {
+        updateCropViewScrolling()
+    }
+}
+
+// MARK: - Cropable
+
+extension ATHImagePickerPreviewViewController {
+    public func willZoom() {
+        isZooming = true
+    }
+    
+    public func willEndZooming() {
+        isZooming = false
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
 
 extension ATHImagePickerPreviewViewController: UIGestureRecognizerDelegate {
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {

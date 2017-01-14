@@ -11,12 +11,13 @@ import Material
 import AVFoundation
 import ImagePickerKit
 
-final public class ATHImagePickerCaptureViewController: UIViewController, PhotoCapturable {
+final public class ATHImagePickerCaptureViewController: UIViewController, PhotoCapturable, StatusBarUpdatable {
 
     // MARK: - Outlets
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var flashButton: UIButton!
+    @IBOutlet weak var switchButton: UIButton!
     
     // MARK: - Capturable properties
     
@@ -46,17 +47,36 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     
     public static let identifier = "ATHImagePickerCaptureViewController"
     
+    open override var prefersStatusBarHidden: Bool {
+        return isStatusBarHidden
+    }
+    
+    open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return statusBarAnimation
+    }
+    
     fileprivate var flashMode: AVCaptureFlashMode = .on {
         didSet {
             let bundle = Bundle(for: self.classForCoder)
             
             switch flashMode {
             case .on:
-                flashButton.setImage(UIImage(named: "Flash", in: bundle, compatibleWith: nil), for: UIControlState())
+                let image = config.assets?.flashOnImage ??
+                    UIImage(named: "Flash", in: bundle, compatibleWith: nil)
+                
+                flashButton.setImage(image, for: .normal)
+                
             case .off:
-                flashButton.setImage(UIImage(named: "FlashOff", in: bundle, compatibleWith: nil), for: UIControlState())
+                let image = config.assets?.flashOffImage ??
+                    UIImage(named: "FlashOff", in: bundle, compatibleWith: nil)
+                
+                flashButton.setImage(image, for: .normal)
+                
             case .auto:
-                flashButton.setImage(UIImage(named: "FlashAuto", in: bundle, compatibleWith: nil), for: UIControlState())
+                let image = config.assets?.flashAutoImage ??
+                    UIImage(named: "FlashAuto", in: bundle, compatibleWith: nil)
+                
+                flashButton.setImage(image, for: .normal)
             }
             
             setFlashMode(flashMode)
@@ -78,6 +98,18 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
             handler.setupItem(navigationItem, config: config, ignoreRight: true, leftHandler: { [weak self] in
                 self?.commiterDelegate?.commit(item: ATHImagePickerItem(image: nil))
             }, rightHandler: nil)
+        }
+    }
+    
+    fileprivate var isStatusBarHidden: Bool = false {
+        didSet {
+            updateStatusBar()
+        }
+    }
+    
+    fileprivate var statusBarAnimation: UIStatusBarAnimation = .none {
+        didSet {
+            updateStatusBar()
         }
     }
     
@@ -103,12 +135,12 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         reloadPreview(previewViewContainer)
-        pageTabBarItem.titleColor = Color.black
+        pageTabBarItem.titleColor = config.titleColor
     }
     
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        pageTabBarItem.titleColor = Color.tin
+        pageTabBarItem.titleColor = config.titleInactiveColor
     }
     
     // MARK: - Setup utils
@@ -121,8 +153,16 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
         self.config = config
         
         pageTabBarItem.title = config.title
-        pageTabBarItem.titleColor = config.titleColor
+        pageTabBarItem.titleColor = view.window != nil ? config.titleColor : config.titleInactiveColor
         pageTabBarItem.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+        
+        isStatusBarHidden = config.isStatusBarHidden
+        statusBarAnimation = config.statusBarAnimation
+        
+        let bundle = Bundle(for: self.classForCoder)
+        let image = config.assets?.switchCameraIcon ??
+            UIImage(named: "FlipCamera", in: bundle, compatibleWith: nil)
+        switchButton.setImage(image, for: .normal)
     }
     
     

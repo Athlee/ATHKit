@@ -81,9 +81,13 @@ class ViewController: UIViewController, ATHImagePickerControllerDelegate, ATHIma
                 leftButtonImage: #imageLiteral(resourceName: "LeftArrow"),
                 rightButtonImage: nil,
                 title: "Camera",
-                titleColor: ATHImagePickerColor.tin,
+                titleColor: ATHImagePickerColor.black,
+                titleInactiveColor: ATHImagePickerColor.tin,
                 leftButtonColor: ATHImagePickerColor.black,
-                rightButtonColor: ATHImagePickerColor.blue)
+                rightButtonColor: ATHImagePickerColor.blue,
+                isStatusBarHidden: false,
+                statusBarAnimation: .slide
+            )
             
         case ATHImagePickerSourceType.library:
             return ATHImagePickerPageConfig(
@@ -93,8 +97,11 @@ class ViewController: UIViewController, ATHImagePickerControllerDelegate, ATHIma
                 rightButtonImage: nil,
                 title: "Photos",
                 titleColor: ATHImagePickerColor.black,
+                titleInactiveColor: ATHImagePickerColor.tin,
                 leftButtonColor: ATHImagePickerColor.black,
-                rightButtonColor: ATHImagePickerColor.blue)
+                rightButtonColor: ATHImagePickerColor.blue,
+                isStatusBarHidden: false,
+                statusBarAnimation: .slide)
             
         default:
             return ATHImagePickerPageConfig(
@@ -104,8 +111,11 @@ class ViewController: UIViewController, ATHImagePickerControllerDelegate, ATHIma
                 rightButtonImage: nil,
                 title: "Photos",
                 titleColor: ATHImagePickerColor.black,
+                titleInactiveColor: ATHImagePickerColor.tin,
                 leftButtonColor: ATHImagePickerColor.black,
-                rightButtonColor: ATHImagePickerColor.blue)
+                rightButtonColor: ATHImagePickerColor.blue,
+                isStatusBarHidden: false,
+                statusBarAnimation: .slide)
         }
     }
 }

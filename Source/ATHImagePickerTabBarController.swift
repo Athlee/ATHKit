@@ -13,6 +13,14 @@ open class ATHImagePickerTabBarController: PageTabBarController {
 
     // MARK: - Properties 
     
+    open override var prefersStatusBarHidden: Bool {
+        return isStatusBarHidden
+    }
+    
+    open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return statusBarAnimation
+    }
+    
     internal weak var commiterDelegate: ATHImagePickerCommiterDelegate? {
         didSet {
             setupConfig()
@@ -36,6 +44,18 @@ open class ATHImagePickerTabBarController: PageTabBarController {
         }
     }
     
+    fileprivate var isStatusBarHidden: Bool = false {
+        didSet {
+            updateStatusBar()
+        }
+    }
+    
+    fileprivate var statusBarAnimation: UIStatusBarAnimation = .none {
+        didSet {
+            updateStatusBar()
+        }
+    }
+    
     // MARK: - Life cycle 
     
     override open func viewDidLoad() {
@@ -55,8 +75,8 @@ open class ATHImagePickerTabBarController: PageTabBarController {
     
     // MARK: - Setup utils
     
-    fileprivate func setupConfig() {
-        guard let config = commiterDelegate?.commit(configFor: []) else {
+    fileprivate func setupConfig(for sourceType: ATHImagePickerSourceType = []) {
+        guard let config = commiterDelegate?.commit(configFor: sourceType) else {
             return
         }
         
@@ -66,6 +86,17 @@ open class ATHImagePickerTabBarController: PageTabBarController {
         pageTabBarItem.title = config.title
         pageTabBarItem.titleColor = config.titleColor
         pageTabBarItem.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+        
+        isStatusBarHidden = config.isStatusBarHidden
+        statusBarAnimation = config.statusBarAnimation
+    }
+    
+    // MARK: Utils 
+    
+    fileprivate func updateStatusBar() {
+        UIView.animate(withDuration: 0.3) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 }
 
@@ -79,14 +110,11 @@ extension ATHImagePickerTabBarController: PageTabBarControllerDelegate {
     public func pageTabBarController(pageTabBarController: PageTabBarController, didTransitionTo viewController: UIViewController) {
         switch viewController {
         case is ATHImagePickerSelectionViewController:
-            title = viewController.pageTabBarItem.title
-            navigationItem.rightBarButtonItem?.tintColor = Color.blue
-            navigationItem.rightBarButtonItem?.isEnabled = true
+            setupConfig(for: .library)
             
         case is ATHImagePickerCaptureViewController:
-            title = viewController.pageTabBarItem.title
-            navigationItem.rightBarButtonItem?.tintColor = .clear
-            navigationItem.rightBarButtonItem?.isEnabled = false
+            setupConfig(for: .camera)
+            
         default:
             ()
         }

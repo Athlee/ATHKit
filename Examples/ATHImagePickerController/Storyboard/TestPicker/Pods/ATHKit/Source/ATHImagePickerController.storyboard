@@ -14,7 +14,7 @@
         <scene sceneID="PBB-P3-WCA">
             <objects>
                 <navigationController title="Controller" id="aaI-MI-Xgv" customClass="ATHImagePickerController" customModule="ATHKit" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="57y-hm-c2t">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="57y-hm-c2t">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -46,7 +46,7 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wil-uq-Gcs">
-                                <rect key="frame" x="0.0" y="431" width="375" height="236"/>
+                                <rect key="frame" x="0.0" y="433" width="375" height="234"/>
                                 <connections>
                                     <segue destination="pxs-nH-grW" kind="embed" id="Sk2-TF-K8f"/>
                                 </connections>
@@ -54,7 +54,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Wil-uq-Gcs" firstAttribute="top" secondItem="W03-YC-RTa" secondAttribute="bottom" id="Kax-30-Wbv"/>
+                            <constraint firstItem="Wil-uq-Gcs" firstAttribute="top" secondItem="W03-YC-RTa" secondAttribute="bottom" constant="2" id="Kax-30-Wbv"/>
                             <constraint firstItem="Wil-uq-Gcs" firstAttribute="leading" secondItem="0sT-io-PGq" secondAttribute="leading" id="Pxt-ib-aNX"/>
                             <constraint firstItem="W03-YC-RTa" firstAttribute="top" secondItem="l2X-TS-FHS" secondAttribute="bottom" id="R8G-bv-cYX"/>
                             <constraint firstItem="x3l-Z5-NIX" firstAttribute="top" secondItem="Wil-uq-Gcs" secondAttribute="bottom" id="V3f-WR-B6Q"/>
@@ -122,11 +122,11 @@
                         <viewControllerLayoutGuide type="bottom" id="dpw-aU-UWh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="aVv-MT-fgR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="236"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="234"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jiq-OI-Zdt">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="236"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="234"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4uI-cK-znS">
                                     <size key="itemSize" width="157" height="144"/>
@@ -258,6 +258,7 @@
                     <connections>
                         <outlet property="cameraView" destination="eXC-dj-4qV" id="GbW-nn-rWc"/>
                         <outlet property="flashButton" destination="DnW-ag-ZMd" id="LVL-OQ-lG2"/>
+                        <outlet property="switchButton" destination="OUh-wz-L6o" id="jxT-eu-Bw1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Kt-mY-LQh" userLabel="First Responder" sceneMemberID="firstResponder"/>
