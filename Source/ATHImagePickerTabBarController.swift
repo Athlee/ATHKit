@@ -111,9 +111,13 @@ extension ATHImagePickerTabBarController: PageTabBarControllerDelegate {
         switch viewController {
         case is ATHImagePickerSelectionViewController:
             setupConfig(for: .library)
+            navigationItem.rightBarButtonItem?.isEnabled = true
+            navigationItem.rightBarButtonItem?.tintColor = config.rightButtonColor
             
         case is ATHImagePickerCaptureViewController:
             setupConfig(for: .camera)
+            navigationItem.rightBarButtonItem?.isEnabled = false
+            navigationItem.rightBarButtonItem?.tintColor = .clear 
             
         default:
             ()
