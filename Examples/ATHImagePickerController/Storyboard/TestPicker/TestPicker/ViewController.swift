@@ -86,7 +86,8 @@ class ViewController: UIViewController, ATHImagePickerControllerDelegate, ATHIma
                 leftButtonColor: ATHImagePickerColor.black,
                 rightButtonColor: ATHImagePickerColor.blue,
                 isStatusBarHidden: false,
-                statusBarAnimation: .slide)
+                statusBarAnimation: .slide
+            )
             
         case ATHImagePickerSourceType.library:
             return ATHImagePickerPageConfig(
