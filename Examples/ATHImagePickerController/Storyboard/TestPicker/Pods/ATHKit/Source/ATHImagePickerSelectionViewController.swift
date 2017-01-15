@@ -12,6 +12,8 @@ import ImagePickerKit
 
 open class ATHImagePickerSelectionViewController: UIViewController, SelectionController, StatusBarUpdatable {
     
+    typealias Config = ATHImagePickerStatusBarConfig
+    
     // MARK: - Outlets 
     
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
@@ -78,13 +80,13 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
     
     fileprivate var isStatusBarHidden: Bool = false {
         didSet {
-            updateStatusBar()
+            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
         }
     }
     
     fileprivate var statusBarAnimation: UIStatusBarAnimation = .none {
         didSet {
-            updateStatusBar()
+            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
         }
     }
     

@@ -15,8 +15,10 @@ extension PageTabBarController {
     }
 }
 
-open class ATHImagePickerTabBarController: PageTabBarController {
+open class ATHImagePickerTabBarController: PageTabBarController, StatusBarUpdatable {
 
+    typealias Config = ATHImagePickerStatusBarConfig
+    
     // MARK: - Properties 
     
     open override var prefersStatusBarHidden: Bool {
@@ -52,13 +54,13 @@ open class ATHImagePickerTabBarController: PageTabBarController {
     
     fileprivate var isStatusBarHidden: Bool = false {
         didSet {
-            updateStatusBar()
+            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
         }
     }
     
     fileprivate var statusBarAnimation: UIStatusBarAnimation = .none {
         didSet {
-            updateStatusBar()
+            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
         }
     }
     
@@ -118,12 +120,6 @@ extension ATHImagePickerTabBarController {
 // MAKR: - Utils
 
 extension ATHImagePickerTabBarController {
-    fileprivate func updateStatusBar() {
-        UIView.animate(withDuration: 0.3) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-    }
-    
     fileprivate func keepInBounds(scrollView: UIScrollView) {
         guard !isTabSelectedAnimation else { return }
         
