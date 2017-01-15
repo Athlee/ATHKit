@@ -13,6 +13,8 @@ import ImagePickerKit
 
 final public class ATHImagePickerCaptureViewController: UIViewController, PhotoCapturable, StatusBarUpdatable {
 
+    typealias Config = ATHImagePickerStatusBarConfig
+    
     // MARK: - Outlets
     
     @IBOutlet weak var cameraView: UIView!
@@ -103,13 +105,13 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     
     fileprivate var isStatusBarHidden: Bool = false {
         didSet {
-            updateStatusBar()
+            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
         }
     }
     
     fileprivate var statusBarAnimation: UIStatusBarAnimation = .none {
         didSet {
-            updateStatusBar()
+            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
         }
     }
     

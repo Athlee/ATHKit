@@ -12,6 +12,8 @@ import ImagePickerKit
 
 open class ATHImagePickerSelectionViewController: UIViewController, SelectionController, StatusBarUpdatable {
     
+    typealias Config = ATHImagePickerStatusBarConfig
+    
     // MARK: - Outlets 
     
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
@@ -48,6 +50,16 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
         }
     }
     
+    public var isScrollEnabled: Bool = true {
+        didSet {
+            pageTabBarController?.scrollView?.isScrollEnabled = isScrollEnabled
+        }
+    }
+    
+    public var isTracking: Bool {
+        return pageTabBarController?.isTracking ?? false
+    }
+    
     internal weak var commiterDelegate: ATHImagePickerCommiterDelegate? {
         didSet {
             setupConfig()
@@ -68,13 +80,13 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
     
     fileprivate var isStatusBarHidden: Bool = false {
         didSet {
-            updateStatusBar()
+            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
         }
     }
     
     fileprivate var statusBarAnimation: UIStatusBarAnimation = .none {
         didSet {
-            updateStatusBar()
+            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
         }
     }
     

@@ -17,6 +17,9 @@ public protocol SelectionController: class {
     var floatingView: UIView { get }
     var offset: CGPoint { get set }
     
+    var isScrollEnabled: Bool { get set }
+    var isTracking: Bool { get }
+    
     func commit(error: ATHImagePickerError)
 }
 
@@ -154,6 +157,19 @@ extension ATHImagePickerPreviewViewController {
     }
     
     @IBAction func didRecognizeMainPan(_ rec: UIPanGestureRecognizer) {
+        guard !holder.isTracking else { return }
+        
+        let location = rec.location(in: navigationController?.view)
+        if holder.floatingView.frame.contains(location) {
+            holder.isScrollEnabled = false
+        } else {
+            holder.isScrollEnabled = true
+        }
+        
+        if rec.state == .ended || rec.state == .cancelled {
+            holder.isScrollEnabled = true
+        }
+        
         guard !isZooming else { return }
         
         if state == .unfolded {
@@ -166,7 +182,7 @@ extension ATHImagePickerPreviewViewController {
     }
     
     @IBAction func didRecognizeCheckPan(_ rec: UIPanGestureRecognizer) {
-        guard !isZooming else { return }
+        guard !isZooming && !holder.isTracking else { return }
         allowPanOutside = true
     }
 }
