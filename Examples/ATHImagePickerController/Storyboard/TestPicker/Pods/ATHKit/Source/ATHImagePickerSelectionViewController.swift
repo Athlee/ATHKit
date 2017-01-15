@@ -48,6 +48,16 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
         }
     }
     
+    public var isScrollEnabled: Bool = true {
+        didSet {
+            pageTabBarController?.scrollView?.isScrollEnabled = isScrollEnabled
+        }
+    }
+    
+    public var isTracking: Bool {
+        return pageTabBarController?.isTracking ?? false
+    }
+    
     internal weak var commiterDelegate: ATHImagePickerCommiterDelegate? {
         didSet {
             setupConfig()

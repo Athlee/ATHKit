@@ -9,6 +9,12 @@
 import UIKit
 import Material
 
+extension PageTabBarController {
+    open var isTracking: Bool {
+        return scrollView?.contentOffset.x != scrollView?.frame.width
+    }
+}
+
 open class ATHImagePickerTabBarController: PageTabBarController {
 
     // MARK: - Properties 
@@ -56,6 +62,10 @@ open class ATHImagePickerTabBarController: PageTabBarController {
         }
     }
     
+    fileprivate var countOfPages: Int {
+        return viewControllers.count
+    }
+    
     // MARK: - Life cycle 
     
     override open func viewDidLoad() {
@@ -90,21 +100,47 @@ open class ATHImagePickerTabBarController: PageTabBarController {
         isStatusBarHidden = config.isStatusBarHidden
         statusBarAnimation = config.statusBarAnimation
     }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension ATHImagePickerTabBarController {
+    open override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+        keepInBounds(scrollView: scrollView)
+    }
     
-    // MARK: Utils 
-    
+    public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        keepInBounds(scrollView: scrollView)
+    }
+}
+
+// MAKR: - Utils
+
+extension ATHImagePickerTabBarController {
     fileprivate func updateStatusBar() {
         UIView.animate(withDuration: 0.3) {
             self.setNeedsStatusBarAppearanceUpdate()
         }
     }
-}
-
-extension ATHImagePickerTabBarController {
+    
+    fileprivate func keepInBounds(scrollView: UIScrollView) {
+        guard !isTabSelectedAnimation else { return }
+        
+        let offsetX = scrollView.contentOffset.x
+        if selectedIndex == 0 && offsetX < scrollView.frame.width {
+            scrollView.contentOffset.x = scrollView.frame.width
+        } else if selectedIndex == (countOfPages - 1) && offsetX > scrollView.frame.width {
+            scrollView.contentOffset.x = scrollView.frame.width
+        }
+    }
+    
     fileprivate func preparePageTabBar() {
         pageTabBar.lineColor = .clear
     }
 }
+
+// MARK: - PageTabBarControllerDelegate
 
 extension ATHImagePickerTabBarController: PageTabBarControllerDelegate {
     public func pageTabBarController(pageTabBarController: PageTabBarController, didTransitionTo viewController: UIViewController) {
