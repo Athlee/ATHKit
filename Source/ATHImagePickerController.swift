@@ -15,13 +15,18 @@ import UIKit
 internal typealias Color = ATHImagePickerColor
 
 internal protocol StatusBarUpdatable {
-    func updateStatusBar()
+    associatedtype Config
+    func updateStatusBar(with config: Config)
 }
 
-extension StatusBarUpdatable where Self: UIViewController {
-    func updateStatusBar() {
-        UIView.animate(withDuration: 0.3) {
-            self.setNeedsStatusBarAppearanceUpdate()
+extension StatusBarUpdatable where Self: UIViewController, Self.Config == ATHImagePickerStatusBarConfig {
+    func updateStatusBar(with config: Config) {
+        if config.isAnimated {
+            UIView.animate(withDuration: config.animationDuration) {
+                self.setNeedsStatusBarAppearanceUpdate()
+            }
+        } else {
+            setNeedsStatusBarAppearanceUpdate()
         }
     }
 }
@@ -129,6 +134,11 @@ public struct ATHImagePickerPageConfig {
     }
 }
 
+public struct ATHImagePickerStatusBarConfig {
+    public var isAnimated: Bool = false
+    public var animationDuration: TimeInterval = 0.3
+}
+
 open class ATHImagePickerController: UINavigationController, ATHImagePickerCommiterDelegate {
     // MARK: - Static properties
     open static var selectedImage: UIImage?
@@ -140,6 +150,8 @@ open class ATHImagePickerController: UINavigationController, ATHImagePickerCommi
     
     open var sourceType: ATHImagePickerSourceType = [.camera]
     open weak var pickerDelegate: ATHImagePickerControllerDelegate?
+    
+    open static var statusBarConfig = ATHImagePickerStatusBarConfig()
     
     // MARK: - Life cycle 
     
