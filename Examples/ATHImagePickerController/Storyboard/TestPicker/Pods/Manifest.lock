@@ -1,19 +1,19 @@
 PODS:
-  - ATHKit (0.0.5):
+  - ATHKit (0.0.7):
     - ImagePickerKit
     - Material
   - ImagePickerKit (0.2.5)
-  - Material (2.4.6):
-    - Material/Core (= 2.4.6)
-  - Material/Core (2.4.6)
+  - Material (2.4.10):
+    - Material/Core (= 2.4.10)
+  - Material/Core (2.4.10)
 
 DEPENDENCIES:
   - ATHKit
 
 SPEC CHECKSUMS:
-  ATHKit: d1c07dcff77af20528aff01c81224b92d6f48cd2
+  ATHKit: 0c12e3840a096752d29070143e6e13be200edb2e
   ImagePickerKit: e4662c2fd504b6a88bbcb2421e4829dd196a527e
-  Material: 43bd91d61e86ae2b6d6574e28fcb1ed48ff813cb
+  Material: ef1e6da2e242d582205c87847a5346138894a633
 
 PODFILE CHECKSUM: 2a37dccb83181aee4b5dd8a2cc1360a3e371438b
 

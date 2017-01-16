@@ -64,6 +64,14 @@ open class ATHImagePickerTabBarController: PageTabBarController, StatusBarUpdata
         }
     }
     
+    fileprivate var changed = false
+    fileprivate var oldIndex: Int = 0
+    fileprivate var currentIndex: Int = 0 {
+        didSet {
+            oldIndex = oldValue
+        }
+    }
+    
     fileprivate var countOfPages: Int {
         return viewControllers.count
     }
@@ -104,15 +112,42 @@ open class ATHImagePickerTabBarController: PageTabBarController, StatusBarUpdata
     }
 }
 
+// MARK: - UIPageViewController management
+
+extension ATHImagePickerTabBarController {
+    public func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+        return currentIndex
+    }
+}
+
 // MARK: - UIScrollViewDelegate
 
 extension ATHImagePickerTabBarController {
     open override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
+        
+        var pageValue = Int((scrollView.contentOffset.x - scrollView.bounds.width) / scrollView.bounds.width)
+        if pageValue != 0 {
+            changed = true
+            if pageValue == -1 {
+                pageValue = 0
+            }
+        }
+        
+        if changed {
+            currentIndex = pageValue
+            changed = false
+        }
+
         keepInBounds(scrollView: scrollView)
     }
     
     public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        keepInBounds(scrollView: scrollView)
+        updateCurrentViewController()
+    }
+    
+    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         keepInBounds(scrollView: scrollView)
     }
 }
@@ -120,19 +155,29 @@ extension ATHImagePickerTabBarController {
 // MAKR: - Utils
 
 extension ATHImagePickerTabBarController {
-    fileprivate func keepInBounds(scrollView: UIScrollView) {
-        guard !isTabSelectedAnimation else { return }
-        
-        let offsetX = scrollView.contentOffset.x
-        if selectedIndex == 0 && offsetX < scrollView.frame.width {
-            scrollView.contentOffset.x = scrollView.frame.width
-        } else if selectedIndex == (countOfPages - 1) && offsetX > scrollView.frame.width {
-            scrollView.contentOffset.x = scrollView.frame.width
-        }
-    }
-    
     fileprivate func preparePageTabBar() {
         pageTabBar.lineColor = .clear
+    }
+    
+    fileprivate func keepInBounds(scrollView: UIScrollView) {
+        let minOffset = scrollView.bounds.width - CGFloat(currentIndex) * scrollView.bounds.width
+        let maxOffset = CGFloat(countOfPages - currentIndex) * scrollView.bounds.width
+        
+        let bounds = scrollView.bounds
+        if scrollView.contentOffset.x <= minOffset {
+            scrollView.contentOffset.x = minOffset
+        } else if scrollView.contentOffset.x >= maxOffset {
+            scrollView.contentOffset.x = maxOffset
+        }
+        
+        scrollView.bounds = bounds
+        
+        changed = false
+    }
+    
+    fileprivate func updateCurrentViewController() {
+        let direction: UIPageViewControllerNavigationDirection = oldIndex > currentIndex ? .reverse : .forward
+        pageViewController?.setViewControllers([viewControllers[currentIndex]], direction: direction, animated: false, completion: nil)
     }
 }
 

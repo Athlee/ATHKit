@@ -283,6 +283,7 @@ open class PageTabBarController: RootController {
 
 extension PageTabBarController: UIPageViewControllerDelegate {
     open func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        print("HERE, \(previousViewControllers)")
         guard let v = pageViewController.viewControllers?.first else {
             return
         }
@@ -290,6 +291,8 @@ extension PageTabBarController: UIPageViewControllerDelegate {
         guard let index = viewControllers.index(of: v) else {
             return
         }
+        
+        print("INDEX=\(index)")
         
         selectedIndex = index
         pageTabBar.select(at: selectedIndex)
