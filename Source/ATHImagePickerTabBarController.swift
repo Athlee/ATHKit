@@ -64,9 +64,14 @@ open class ATHImagePickerTabBarController: PageTabBarController, StatusBarUpdata
         }
     }
     
-    fileprivate var lastPosition: CGFloat = UIScreen.main.bounds.maxX
-    fileprivate var currentIndex: Int = 0
-    fileprivate var nextIndex: Int = 0
+    fileprivate var changed = false
+    fileprivate var oldIndex: Int = 0
+    fileprivate var currentIndex: Int = 0 {
+        didSet {
+            oldIndex = oldValue
+        }
+    }
+    
     fileprivate var countOfPages: Int {
         return viewControllers.count
     }
@@ -113,68 +118,37 @@ extension ATHImagePickerTabBarController {
     public func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return currentIndex
     }
-    
-    public func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        if let controller = pendingViewControllers.first, let index = viewControllers.index(of: controller) {
-            nextIndex = index
-        }
-    }
-    
-    open override func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        super.pageViewController(pageViewController, didFinishAnimating: finished, previousViewControllers: previousViewControllers, transitionCompleted: completed)
-        nextIndex = currentIndex
-    }
 }
 
 // MARK: - UIScrollViewDelegate
 
 extension ATHImagePickerTabBarController {
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        currentIndex = selectedIndex
-    }
-    
     open override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
         
-        if nextIndex > currentIndex {
-            if scrollView.contentOffset.x < lastPosition - (0.9 * scrollView.bounds.width) {
-                currentIndex = nextIndex
-            }
-        } else {
-            if scrollView.contentOffset.x > lastPosition + (0.9 * scrollView.bounds.width) {
-                currentIndex = nextIndex
+        var pageValue = Int((scrollView.contentOffset.x - scrollView.bounds.width) / scrollView.bounds.width)
+        if pageValue != 0 {
+            changed = true
+            if pageValue == -1 {
+                pageValue = 0
             }
         }
         
-        let minOffset = scrollView.bounds.width - CGFloat(currentIndex) * scrollView.bounds.width
-        let maxOffset = CGFloat(countOfPages - currentIndex) * scrollView.bounds.width
-        let bounds = scrollView.bounds
-        
-        if scrollView.contentOffset.x <= minOffset {
-            scrollView.contentOffset.x = minOffset
-        } else if scrollView.contentOffset.x >= maxOffset {
-            scrollView.contentOffset.x = maxOffset
+        if changed {
+            currentIndex = pageValue
+            changed = false
         }
-        
-        scrollView.bounds = bounds
-        
-        lastPosition = scrollView.contentOffset.x
+
+        keepInBounds(scrollView: scrollView)
     }
     
     public func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let minOffset = scrollView.bounds.width - CGFloat(currentIndex) * scrollView.bounds.width
-        let maxOffset = CGFloat(countOfPages - currentIndex) * scrollView.bounds.width
-        
-        let bounds = scrollView.bounds
-        if scrollView.contentOffset.x <= minOffset {
-            scrollView.contentOffset.x = minOffset
-        } else if scrollView.contentOffset.x >= maxOffset {
-            scrollView.contentOffset.x = maxOffset
-        }
-        
-        scrollView.bounds = bounds
-        
-        lastPosition = scrollView.contentOffset.x
+        keepInBounds(scrollView: scrollView)
+        updateCurrentViewController()
+    }
+    
+    public func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        keepInBounds(scrollView: scrollView)
     }
 }
 
@@ -183,6 +157,27 @@ extension ATHImagePickerTabBarController {
 extension ATHImagePickerTabBarController {
     fileprivate func preparePageTabBar() {
         pageTabBar.lineColor = .clear
+    }
+    
+    fileprivate func keepInBounds(scrollView: UIScrollView) {
+        let minOffset = scrollView.bounds.width - CGFloat(currentIndex) * scrollView.bounds.width
+        let maxOffset = CGFloat(countOfPages - currentIndex) * scrollView.bounds.width
+        
+        let bounds = scrollView.bounds
+        if scrollView.contentOffset.x <= minOffset {
+            scrollView.contentOffset.x = minOffset
+        } else if scrollView.contentOffset.x >= maxOffset {
+            scrollView.contentOffset.x = maxOffset
+        }
+        
+        scrollView.bounds = bounds
+        
+        changed = false
+    }
+    
+    fileprivate func updateCurrentViewController() {
+        let direction: UIPageViewControllerNavigationDirection = oldIndex > currentIndex ? .reverse : .forward
+        pageViewController?.setViewControllers([viewControllers[currentIndex]], direction: direction, animated: false, completion: nil)
     }
 }
 
