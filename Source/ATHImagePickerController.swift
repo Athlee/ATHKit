@@ -31,6 +31,14 @@ extension StatusBarUpdatable where Self: UIViewController, Self.Config == ATHIma
     }
 }
 
+internal final class ATHImagePickerStatusBarAppearance {
+    internal var config = ATHImagePickerStatusBarConfig()
+    
+    internal let shared = ATHImagePickerStatusBarAppearance()
+    
+    private init() { }
+}
+
 //
 // MARK: - `ATHImagePickerController` public components
 //
@@ -72,22 +80,22 @@ public protocol ATHImagePickerControllerDelegate: class {
     func imagePickerController(_ picker: ATHImagePickerController, configFor sourceType: ATHImagePickerSourceType) -> ATHImagePickerPageConfig
 }
 
-//public struct ATHImagePickerAssets {
-//    public let switchCameraIcon: UIImage?
-//    public let flashOnImage: UIImage?
-//    public let flashOffImage: UIImage?
-//    public let flashAutoImage: UIImage?
-//    
-//    public init(switchCameraIcon: UIImage? = nil,
-//                flashOnImage: UIImage? = nil,
-//                flashOffImage: UIImage? = nil,
-//                flashAutoImage: UIImage? = nil) {
-//        self.switchCameraIcon = switchCameraIcon
-//        self.flashOnImage = flashOnImage
-//        self.flashOffImage = flashOffImage
-//        self.flashAutoImage = flashAutoImage
-//    }
-//}
+public struct ATHImagePickerAssets {
+    public let switchCameraIcon: UIImage?
+    public let flashOnImage: UIImage?
+    public let flashOffImage: UIImage?
+    public let flashAutoImage: UIImage?
+    
+    public init(switchCameraIcon: UIImage? = nil,
+                flashOnImage: UIImage? = nil,
+                flashOffImage: UIImage? = nil,
+                flashAutoImage: UIImage? = nil) {
+        self.switchCameraIcon = switchCameraIcon
+        self.flashOnImage = flashOnImage
+        self.flashOffImage = flashOffImage
+        self.flashAutoImage = flashAutoImage
+    }
+}
 
 public struct ATHImagePickerPageConfig {
     public let leftButtonTitle: String
@@ -103,7 +111,7 @@ public struct ATHImagePickerPageConfig {
     public let isStatusBarHidden: Bool
     public let statusBarAnimation: UIStatusBarAnimation
     
-    //public let assets: ATHImagePickerAssets?
+    public let assets: ATHImagePickerAssets?
     
     public init(leftButtonTitle: String,
                 rightButtonTitle: String,
@@ -115,8 +123,8 @@ public struct ATHImagePickerPageConfig {
                 leftButtonColor: UIColor,
                 rightButtonColor: UIColor,
                 isStatusBarHidden: Bool = false,
-                statusBarAnimation: UIStatusBarAnimation = .none
-                /*assets: ATHImagePickerAssets? = nil*/) {
+                statusBarAnimation: UIStatusBarAnimation = .none,
+                assets: ATHImagePickerAssets? = nil) {
         self.leftButtonTitle = leftButtonTitle
         self.rightButtonTitle = rightButtonTitle
         self.leftButtonImage = leftButtonImage
@@ -130,7 +138,7 @@ public struct ATHImagePickerPageConfig {
         self.isStatusBarHidden = isStatusBarHidden
         self.statusBarAnimation = statusBarAnimation
         
-        //self.assets = assets
+        self.assets = assets
     }
 }
 
@@ -150,8 +158,6 @@ open class ATHImagePickerController: UINavigationController, ATHImagePickerCommi
     
     open var sourceType: ATHImagePickerSourceType = [.camera]
     open weak var pickerDelegate: ATHImagePickerControllerDelegate?
-    
-    //open static var statusBarConfig = ATHImagePickerStatusBarConfig()
     
     // MARK: - Life cycle 
     
