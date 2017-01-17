@@ -15,12 +15,12 @@ import UIKit
 internal typealias Color = ATHImagePickerColor
 
 internal protocol StatusBarUpdatable {
-    //associatedtype Config
-    func updateStatusBar(with config: ATHImagePickerStatusBarConfig)
+    associatedtype Config
+    func updateStatusBar(with config: Config)
 }
 
-extension StatusBarUpdatable where Self: UIViewController {
-    func updateStatusBar(with config: ATHImagePickerStatusBarConfig) {
+extension StatusBarUpdatable where Self: UIViewController, Self.Config == ATHImagePickerStatusBarConfig {
+    func updateStatusBar(with config: Config) {
         if config.isAnimated {
             UIView.animate(withDuration: config.animationDuration) {
                 self.setNeedsStatusBarAppearanceUpdate()
@@ -72,22 +72,22 @@ public protocol ATHImagePickerControllerDelegate: class {
     func imagePickerController(_ picker: ATHImagePickerController, configFor sourceType: ATHImagePickerSourceType) -> ATHImagePickerPageConfig
 }
 
-public struct ATHImagePickerAssets {
-    public let switchCameraIcon: UIImage?
-    public let flashOnImage: UIImage?
-    public let flashOffImage: UIImage?
-    public let flashAutoImage: UIImage?
-    
-    public init(switchCameraIcon: UIImage? = nil,
-                flashOnImage: UIImage? = nil,
-                flashOffImage: UIImage? = nil,
-                flashAutoImage: UIImage? = nil) {
-        self.switchCameraIcon = switchCameraIcon
-        self.flashOnImage = flashOnImage
-        self.flashOffImage = flashOffImage
-        self.flashAutoImage = flashAutoImage
-    }
-}
+//public struct ATHImagePickerAssets {
+//    public let switchCameraIcon: UIImage?
+//    public let flashOnImage: UIImage?
+//    public let flashOffImage: UIImage?
+//    public let flashAutoImage: UIImage?
+//    
+//    public init(switchCameraIcon: UIImage? = nil,
+//                flashOnImage: UIImage? = nil,
+//                flashOffImage: UIImage? = nil,
+//                flashAutoImage: UIImage? = nil) {
+//        self.switchCameraIcon = switchCameraIcon
+//        self.flashOnImage = flashOnImage
+//        self.flashOffImage = flashOffImage
+//        self.flashAutoImage = flashAutoImage
+//    }
+//}
 
 public struct ATHImagePickerPageConfig {
     public let leftButtonTitle: String
@@ -103,7 +103,7 @@ public struct ATHImagePickerPageConfig {
     public let isStatusBarHidden: Bool
     public let statusBarAnimation: UIStatusBarAnimation
     
-    public let assets: ATHImagePickerAssets?
+    //public let assets: ATHImagePickerAssets?
     
     public init(leftButtonTitle: String,
                 rightButtonTitle: String,
@@ -115,8 +115,8 @@ public struct ATHImagePickerPageConfig {
                 leftButtonColor: UIColor,
                 rightButtonColor: UIColor,
                 isStatusBarHidden: Bool = false,
-                statusBarAnimation: UIStatusBarAnimation = .none,
-                assets: ATHImagePickerAssets? = nil) {
+                statusBarAnimation: UIStatusBarAnimation = .none
+                /*assets: ATHImagePickerAssets? = nil*/) {
         self.leftButtonTitle = leftButtonTitle
         self.rightButtonTitle = rightButtonTitle
         self.leftButtonImage = leftButtonImage
@@ -130,7 +130,7 @@ public struct ATHImagePickerPageConfig {
         self.isStatusBarHidden = isStatusBarHidden
         self.statusBarAnimation = statusBarAnimation
         
-        self.assets = assets
+        //self.assets = assets
     }
 }
 

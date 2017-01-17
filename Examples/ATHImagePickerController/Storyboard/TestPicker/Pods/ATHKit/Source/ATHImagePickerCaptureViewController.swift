@@ -63,19 +63,19 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
             
             switch flashMode {
             case .on:
-                let image = config.assets?.flashOnImage ??
+                let image = /*config.assets?.flashOnImage ??*/
                     UIImage(named: "Flash", in: bundle, compatibleWith: nil)
                 
                 flashButton.setImage(image, for: .normal)
                 
             case .off:
-                let image = config.assets?.flashOffImage ??
+                let image = /*config.assets?.flashOffImage ??*/
                     UIImage(named: "FlashOff", in: bundle, compatibleWith: nil)
                 
                 flashButton.setImage(image, for: .normal)
                 
             case .auto:
-                let image = config.assets?.flashAutoImage ??
+                let image = /*config.assets?.flashAutoImage ??*/
                     UIImage(named: "FlashAuto", in: bundle, compatibleWith: nil)
                 
                 flashButton.setImage(image, for: .normal)
@@ -162,7 +162,7 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
         statusBarAnimation = config.statusBarAnimation
         
         let bundle = Bundle(for: self.classForCoder)
-        let image = config.assets?.switchCameraIcon ??
+        let image = /*config.assets?.switchCameraIcon ??*/
             UIImage(named: "FlipCamera", in: bundle, compatibleWith: nil)
         switchButton.setImage(image, for: .normal)
     }
