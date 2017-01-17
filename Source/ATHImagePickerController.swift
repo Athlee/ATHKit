@@ -15,12 +15,12 @@ import UIKit
 internal typealias Color = ATHImagePickerColor
 
 internal protocol StatusBarUpdatable {
-    associatedtype Config
-    func updateStatusBar(with config: Config)
+    //associatedtype Config
+    func updateStatusBar(with config: ATHImagePickerStatusBarConfig)
 }
 
-extension StatusBarUpdatable where Self: UIViewController, Self.Config == ATHImagePickerStatusBarConfig {
-    func updateStatusBar(with config: Config) {
+extension StatusBarUpdatable where Self: UIViewController {
+    func updateStatusBar(with config: ATHImagePickerStatusBarConfig) {
         if config.isAnimated {
             UIView.animate(withDuration: config.animationDuration) {
                 self.setNeedsStatusBarAppearanceUpdate()
