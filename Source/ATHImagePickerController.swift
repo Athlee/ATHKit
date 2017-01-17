@@ -151,7 +151,7 @@ open class ATHImagePickerController: UINavigationController, ATHImagePickerCommi
     open var sourceType: ATHImagePickerSourceType = [.camera]
     open weak var pickerDelegate: ATHImagePickerControllerDelegate?
     
-    open static var statusBarConfig = ATHImagePickerStatusBarConfig()
+    //open static var statusBarConfig = ATHImagePickerStatusBarConfig()
     
     // MARK: - Life cycle 
     

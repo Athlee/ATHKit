@@ -105,13 +105,15 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     
     fileprivate var isStatusBarHidden: Bool = false {
         didSet {
-            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
+            //updateStatusBar(with: ATHImagePickerController.statusBarConfig)
+          updateStatusBar(with: ATHImagePickerStatusBarConfig())
         }
     }
     
     fileprivate var statusBarAnimation: UIStatusBarAnimation = .none {
         didSet {
-            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
+            //updateStatusBar(with: ATHImagePickerController.statusBarConfig)
+          updateStatusBar(with: ATHImagePickerStatusBarConfig())
         }
     }
     
