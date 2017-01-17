@@ -105,13 +105,13 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
     
     fileprivate var isStatusBarHidden: Bool = false {
         didSet {
-            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
+            updateStatusBar(with: config.statusBarConfig)
         }
     }
     
     fileprivate var statusBarAnimation: UIStatusBarAnimation = .none {
         didSet {
-            updateStatusBar(with: ATHImagePickerController.statusBarConfig)
+            updateStatusBar(with: config.statusBarConfig)
         }
     }
     
@@ -158,8 +158,8 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
         pageTabBarItem.titleColor = view.window != nil ? config.titleColor : config.titleInactiveColor
         pageTabBarItem.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
         
-        isStatusBarHidden = config.isStatusBarHidden
-        statusBarAnimation = config.statusBarAnimation
+        isStatusBarHidden = config.statusBarConfig.isStatusBarHidden
+        statusBarAnimation = config.statusBarConfig.statusBarAnimation
         
         let bundle = Bundle(for: self.classForCoder)
         let image = /*config.assets?.switchCameraIcon ??*/

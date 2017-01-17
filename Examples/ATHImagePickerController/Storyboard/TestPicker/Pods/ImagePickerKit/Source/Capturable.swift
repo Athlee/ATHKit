@@ -131,7 +131,7 @@ public extension Capturable {
         session.startRunning()
       }
     } catch {
-      assertionFailure("Unable to connect to the device input....")
+      debugPrint("Unable to connect to the device input...")
     }
     
     setFlashMode(.auto)

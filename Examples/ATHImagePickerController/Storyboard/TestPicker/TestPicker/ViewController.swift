@@ -84,9 +84,7 @@ class ViewController: UIViewController, ATHImagePickerControllerDelegate, ATHIma
                 titleColor: ATHImagePickerColor.black,
                 titleInactiveColor: ATHImagePickerColor.tin,
                 leftButtonColor: ATHImagePickerColor.black,
-                rightButtonColor: ATHImagePickerColor.blue,
-                isStatusBarHidden: false,
-                statusBarAnimation: .slide
+                rightButtonColor: ATHImagePickerColor.blue
             )
             
         case ATHImagePickerSourceType.library:
@@ -99,9 +97,8 @@ class ViewController: UIViewController, ATHImagePickerControllerDelegate, ATHIma
                 titleColor: ATHImagePickerColor.black,
                 titleInactiveColor: ATHImagePickerColor.tin,
                 leftButtonColor: ATHImagePickerColor.black,
-                rightButtonColor: ATHImagePickerColor.blue,
-                isStatusBarHidden: false,
-                statusBarAnimation: .slide)
+                rightButtonColor: ATHImagePickerColor.blue
+            )
             
         default:
             return ATHImagePickerPageConfig(
@@ -113,9 +110,8 @@ class ViewController: UIViewController, ATHImagePickerControllerDelegate, ATHIma
                 titleColor: ATHImagePickerColor.black,
                 titleInactiveColor: ATHImagePickerColor.tin,
                 leftButtonColor: ATHImagePickerColor.black,
-                rightButtonColor: ATHImagePickerColor.blue,
-                isStatusBarHidden: false,
-                statusBarAnimation: .slide)
+                rightButtonColor: ATHImagePickerColor.blue
+            )
         }
     }
 }
