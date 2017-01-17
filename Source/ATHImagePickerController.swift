@@ -31,14 +31,6 @@ extension StatusBarUpdatable where Self: UIViewController, Self.Config == ATHIma
     }
 }
 
-internal final class ATHImagePickerStatusBarAppearance {
-    internal var config = ATHImagePickerStatusBarConfig()
-    
-    internal let shared = ATHImagePickerStatusBarAppearance()
-    
-    private init() { }
-}
-
 //
 // MARK: - `ATHImagePickerController` public components
 //
@@ -108,9 +100,7 @@ public struct ATHImagePickerPageConfig {
     public let leftButtonColor: UIColor
     public let rightButtonColor: UIColor
     
-    public let isStatusBarHidden: Bool
-    public let statusBarAnimation: UIStatusBarAnimation
-    
+    public let statusBarConfig: ATHImagePickerStatusBarConfig
     public let assets: ATHImagePickerAssets?
     
     public init(leftButtonTitle: String,
@@ -122,8 +112,7 @@ public struct ATHImagePickerPageConfig {
                 titleInactiveColor: UIColor,
                 leftButtonColor: UIColor,
                 rightButtonColor: UIColor,
-                isStatusBarHidden: Bool = false,
-                statusBarAnimation: UIStatusBarAnimation = .none,
+                statusBarConfig: ATHImagePickerStatusBarConfig = ATHImagePickerStatusBarConfig(),
                 assets: ATHImagePickerAssets? = nil) {
         self.leftButtonTitle = leftButtonTitle
         self.rightButtonTitle = rightButtonTitle
@@ -135,16 +124,26 @@ public struct ATHImagePickerPageConfig {
         self.leftButtonColor = leftButtonColor
         self.rightButtonColor = rightButtonColor
         
-        self.isStatusBarHidden = isStatusBarHidden
-        self.statusBarAnimation = statusBarAnimation
-        
+        self.statusBarConfig = statusBarConfig
         self.assets = assets
     }
 }
 
 public struct ATHImagePickerStatusBarConfig {
-    public var isAnimated: Bool = false
+    public var isStatusBarHidden = false
+    public var statusBarAnimation: UIStatusBarAnimation = .none
+    public var isAnimated = false
     public var animationDuration: TimeInterval = 0.3
+    
+    public init(isStatusBarHidden: Bool = false,
+                statusBarAnimation: UIStatusBarAnimation = .none,
+                isAnimated: Bool = false,
+                animationDuration: TimeInterval = 0.3) {
+        self.isStatusBarHidden = isStatusBarHidden
+        self.statusBarAnimation = statusBarAnimation
+        self.isAnimated = isAnimated
+        self.animationDuration = animationDuration
+    }
 }
 
 open class ATHImagePickerController: UINavigationController, ATHImagePickerCommiterDelegate {

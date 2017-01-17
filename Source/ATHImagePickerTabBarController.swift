@@ -54,15 +54,13 @@ open class ATHImagePickerTabBarController: PageTabBarController, StatusBarUpdata
     
     fileprivate var isStatusBarHidden: Bool = false {
         didSet {
-            //updateStatusBar(with: ATHImagePickerController.statusBarConfig)
-          updateStatusBar(with: ATHImagePickerStatusBarConfig())
+            updateStatusBar(with: config.statusBarConfig)
         }
     }
     
     fileprivate var statusBarAnimation: UIStatusBarAnimation = .none {
         didSet {
-            //updateStatusBar(with: ATHImagePickerController.statusBarConfig)
-          updateStatusBar(with: ATHImagePickerStatusBarConfig())
+            updateStatusBar(with: config.statusBarConfig)
         }
     }
     
@@ -109,8 +107,8 @@ open class ATHImagePickerTabBarController: PageTabBarController, StatusBarUpdata
         pageTabBarItem.titleColor = config.titleColor
         pageTabBarItem.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
         
-        isStatusBarHidden = config.isStatusBarHidden
-        statusBarAnimation = config.statusBarAnimation
+        isStatusBarHidden = config.statusBarConfig.isStatusBarHidden
+        statusBarAnimation = config.statusBarConfig.statusBarAnimation
     }
 }
 
