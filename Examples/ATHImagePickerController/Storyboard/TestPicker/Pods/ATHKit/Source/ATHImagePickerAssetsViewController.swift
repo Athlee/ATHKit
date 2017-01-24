@@ -52,6 +52,15 @@ open class ATHImagePickerAssetsViewController: UIViewController, AssetsControlle
     return fetchResult
   }()
   
+  public lazy var fetchingOptions: PHImageRequestOptions = {
+    let options = PHImageRequestOptions()
+    options.deliveryMode = .highQualityFormat
+    options.isSynchronous = true
+    options.isNetworkAccessAllowed = true
+    
+    return options
+  }()
+  
   public lazy var cachingImageManager = PHCachingImageManager.default() as! PHCachingImageManager
   
   public var previousPreheatRect: CGRect = .zero
@@ -213,16 +222,11 @@ extension ATHImagePickerAssetsViewController: UICollectionViewDataSource, UIColl
     
     let asset = fetchResult[fetchResult.count - indexPath.item - 1]
     
-    let options = PHImageRequestOptions()
-    options.deliveryMode = .highQualityFormat
-    options.isSynchronous = true
-    options.isNetworkAccessAllowed = true
-    
     cachingImageManager.requestImage(
       for: asset,
       targetSize: cellSize,
       contentMode: .aspectFill,
-      options: options) { result, info in
+      options: fetchingOptions) { result, info in
         DispatchQueue.main.async {
           cell.photoImageView.image = result
         }
@@ -246,7 +250,7 @@ extension ATHImagePickerAssetsViewController: UICollectionViewDataSource, UIColl
       for: asset,
       targetSize: UIScreen.main.bounds.size,
       contentMode: .aspectFill,
-      options: nil) { result, info in
+      options: fetchingOptions) { result, info in
         if info!["PHImageFileURLKey"] != nil  {
           if let previewController = self.holder.previewController, previewController.state == .folded {
             let floatingView = self.holder.floatingView
