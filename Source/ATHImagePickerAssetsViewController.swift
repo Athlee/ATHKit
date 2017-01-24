@@ -223,8 +223,6 @@ extension ATHImagePickerAssetsViewController: UICollectionViewDataSource, UIColl
   }
   
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let reversedIndex = fetchResult.count - indexPath.item - 1
-    
     guard indexPath.item < fetchResult.count else {
       return
     }

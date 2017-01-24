@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name                  = "ATHKit"
-s.version               = "0.0.9.5"
+s.version               = "0.1.0"
 s.summary               = "ATHKit is a collection of customizable UI components such as ImagePickerController and more."
 s.homepage              = "https://github.com/Athlee/ATHKit"
 s.license               = { :type => "MIT", :file => "LICENSE" }
