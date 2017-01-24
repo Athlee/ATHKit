@@ -40,14 +40,19 @@ open class ATHImagePickerAssetsViewController: UIViewController, AssetsControlle
   open var space: CGFloat = 2
   
   public lazy var fetchResult: PHFetchResult = { () -> PHFetchResult<PHAsset> in
+    let collections = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumMyPhotoStream, options: nil)
+    guard let collection = collections.firstObject else {
+      return PHAsset.fetchAssets(with: .image, options: nil)
+    }
+    
     let options = PHFetchOptions()
-    options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-    let fetchResult = PHAsset.fetchAssets(with: .image, options: options)
+    options.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
+    let fetchResult = PHAsset.fetchAssets(in: collection, options: options)
     
     return fetchResult
   }()
   
-  public lazy var cachingImageManager = PHCachingImageManager()
+  public lazy var cachingImageManager = PHCachingImageManager.default() as! PHCachingImageManager
   
   public var previousPreheatRect: CGRect = .zero
   
@@ -93,7 +98,7 @@ open class ATHImagePickerAssetsViewController: UIViewController, AssetsControlle
     super.viewWillAppear(animated)
     
     if !reloaded {
-      guard let firstAsset = fetchResult.firstObject else {
+      guard let firstAsset = fetchResult.lastObject else {
         if ATHImagePickerAssetsViewController.basicPhoto == nil {
           let bundle = Bundle(for: self.classForCoder)
           ATHImagePickerAssetsViewController.basicPhoto = UIImage(named: "basicPhoto", in: bundle, compatibleWith: nil)
@@ -206,15 +211,21 @@ extension ATHImagePickerAssetsViewController: UICollectionViewDataSource, UIColl
       return cell
     }
     
-    let asset = fetchResult[indexPath.item]
+    let asset = fetchResult[fetchResult.count - indexPath.item - 1]
+    
+    let options = PHImageRequestOptions()
+    options.deliveryMode = .highQualityFormat
+    options.isSynchronous = true
+    options.isNetworkAccessAllowed = true
+    
     cachingImageManager.requestImage(
       for: asset,
       targetSize: cellSize,
       contentMode: .aspectFill,
-      options: nil) { [cell] result, info in
-        
-        cell.photoImageView.image = result
-        
+      options: options) { result, info in
+        DispatchQueue.main.async {
+          cell.photoImageView.image = result
+        }
     }
     
     cell.backgroundColor = .red
@@ -229,7 +240,8 @@ extension ATHImagePickerAssetsViewController: UICollectionViewDataSource, UIColl
       return
     }
     
-    let asset = fetchResult[indexPath.item]
+    let asset = fetchResult[fetchResult.count - indexPath.item - 1]
+    
     cachingImageManager.requestImage(
       for: asset,
       targetSize: UIScreen.main.bounds.size,
@@ -250,7 +262,6 @@ extension ATHImagePickerAssetsViewController: UICollectionViewDataSource, UIColl
           }
         }
     }
-    
   }
 }
 
