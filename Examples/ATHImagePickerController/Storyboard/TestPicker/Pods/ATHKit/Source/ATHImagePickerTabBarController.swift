@@ -188,9 +188,11 @@ extension ATHImagePickerTabBarController: PageTabBarControllerDelegate {
     switch viewController {
     case is ATHImagePickerSelectionViewController:
       setupConfig(for: .library)
+      navigationItem.rightBarButtonItem?.isEnabled = true
       
     case is ATHImagePickerCaptureViewController:
       setupConfig(for: .camera)
+      navigationItem.rightBarButtonItem?.isEnabled = false
       
     default:
       ()
