@@ -249,19 +249,17 @@ extension ATHImagePickerAssetsViewController: UICollectionViewDataSource, UIColl
       targetSize: UIScreen.main.bounds.size,
       contentMode: .aspectFill,
       options: fetchingOptions) { result, info in
-        if info!["PHImageFileURLKey"] != nil  {
-          if let previewController = self.holder.previewController, previewController.state == .folded {
-            let floatingView = self.holder.floatingView
-            previewController.restore(view: floatingView, to: .unfolded, animated: true)
-            previewController.animationCompletion = { _ in
-              self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-              previewController.animationCompletion = nil
-            }
+        if let previewController = self.holder.previewController, previewController.state == .folded {
+          let floatingView = self.holder.floatingView
+          previewController.restore(view: floatingView, to: .unfolded, animated: true)
+          previewController.animationCompletion = { _ in
+            self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+            previewController.animationCompletion = nil
           }
-          
-          DispatchQueue.main.async {
-            self.holder.previewController?.image = result
-          }
+        }
+        
+        DispatchQueue.main.async {
+          self.holder.previewController?.image = result
         }
     }
   }
