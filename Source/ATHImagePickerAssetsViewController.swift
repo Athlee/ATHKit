@@ -188,6 +188,8 @@ extension ATHImagePickerAssetsViewController: PhotoCachable {
   }
 }
 
+// MARK: - UIScrollView management
+
 extension ATHImagePickerAssetsViewController {
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if scrollView == collectionView {
@@ -203,6 +205,8 @@ extension ATHImagePickerAssetsViewController {
     }
   }
 }
+
+// MARK: - UICollectionView management
 
 extension ATHImagePickerAssetsViewController: UICollectionViewDataSource, UICollectionViewDelegate {
   public func numberOfSections(in collectionView: UICollectionView) -> Int {
