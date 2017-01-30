@@ -33,7 +33,7 @@ public protocol PreviewController: FloatingViewLayout {
 
 open class ATHImagePickerPreviewViewController: UIViewController, EmbededController, PreviewController, Cropable {
   
-  // MARK: - Outlets
+  // MARK: Outlets
   
   @IBOutlet weak var cropContainerView: UIView!
   
@@ -64,7 +64,7 @@ open class ATHImagePickerPreviewViewController: UIViewController, EmbededControl
   
   open var allowPanOutside = false
   
-  // MARK: - PickerController properties
+  // MARK: PickerController properties
   
   public var image: UIImage? {
     didSet {
@@ -74,11 +74,11 @@ open class ATHImagePickerPreviewViewController: UIViewController, EmbededControl
     }
   }
   
-  // MARK: - EmbededController properties
+  // MARK: EmbededController properties
   
   internal weak var holder: SelectionController!
   
-  // MARK: - Cropable properties
+  // MARK: Cropable properties
   
   public var cropView = UIScrollView()
   public var childContainerView = UIView()
@@ -97,7 +97,7 @@ open class ATHImagePickerPreviewViewController: UIViewController, EmbededControl
     return CropableScrollViewDelegate(cropable: self)
   }()
   
-  // MARK: - Properties
+  // MARK: Properties
   
   fileprivate var isZooming = false
   fileprivate var isChecking = false
@@ -121,7 +121,7 @@ open class ATHImagePickerPreviewViewController: UIViewController, EmbededControl
     }
   }
   
-  // MARK: - Life cycle
+  // MARK: Life cycle
   
   override open func viewDidLoad() {
     super.viewDidLoad()
@@ -144,6 +144,21 @@ open class ATHImagePickerPreviewViewController: UIViewController, EmbededControl
       addedRecognizers = true
       addGestureRecognizers()
     }
+    
+    // Prevent instant velocity behavior.
+    if state == .unfolded {
+      previousPoint = nil
+    }
+  }
+  
+  // MARK: Touches
+  
+  open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    holder.isScrollEnabled = false
+  }
+  
+  open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    holder.isScrollEnabled = true
   }
 }
 
