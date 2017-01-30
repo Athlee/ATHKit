@@ -35,6 +35,7 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
   }
   
   public var videoInput: AVCaptureDeviceInput?
+  
   public var imageOutput: AVCaptureStillImageOutput?
   
   public var focusView: UIView?
@@ -166,7 +167,6 @@ final public class ATHImagePickerCaptureViewController: UIViewController, PhotoC
       UIImage(named: "FlipCamera", in: bundle, compatibleWith: nil)
     switchButton.setImage(image, for: .normal)
   }
-  
   
   // MARK: - IBActions
   
