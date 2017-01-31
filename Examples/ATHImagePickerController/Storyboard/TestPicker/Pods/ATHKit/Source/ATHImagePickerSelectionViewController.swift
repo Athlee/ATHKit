@@ -56,6 +56,16 @@ open class ATHImagePickerSelectionViewController: UIViewController, SelectionCon
     }
   }
   
+  public var isBouncing: Bool = true {
+    didSet {
+      pageTabBarController?.isBounceEnabled = isBouncing
+      
+      if !isBouncing {
+        pageTabBarController?.scrollView?.contentOffset = .zero
+      }
+    }
+  }
+  
   public var isTracking: Bool {
     return pageTabBarController?.isTracking ?? false
   }

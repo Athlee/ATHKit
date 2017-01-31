@@ -12,13 +12,14 @@ import ImagePickerKit
 
 public protocol AssetsController: class {
   var offset: CGPoint { get set }
+  var collectionView: UICollectionView! { get set }
 }
 
 open class ATHImagePickerAssetsViewController: UIViewController, AssetsController, EmbededController {
   
   // MARK: - Outlets
   
-  @IBOutlet weak var collectionView: UICollectionView!
+  @IBOutlet public weak var collectionView: UICollectionView!
   
   // MARK: - AssetsController properties
   
