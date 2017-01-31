@@ -9,6 +9,35 @@
 import UIKit
 import ImagePickerKit
 
+// MARK: - Internal Protocols & Implementations
+
+internal protocol EmbededController {
+  var holder: SelectionController! { get set }
+}
+
+internal final class ATHImagePickerCropableScrollViewDelegate<T: Cropable>: CropableScrollViewDelegate<T> where T: AnyObject {
+  internal var didScroll: ((Void) -> Void)?
+  internal var didStartScrolling: ((Void) -> Void)?
+  internal var didEndScrolling: ((Void) -> Void)?
+  
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    super.scrollViewDidScroll(scrollView)
+    didScroll?()
+  }
+  
+  override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    super.scrollViewWillBeginDragging(scrollView)
+    didStartScrolling?()
+  }
+  
+  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    super.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
+    didEndScrolling?()
+  }
+}
+
+// MARK: - Public Protocols & Implementations
+
 public protocol SelectionController: class {
   var previewController: PreviewController? { get set }
   var assetsController: AssetsController? { get set }
@@ -18,13 +47,10 @@ public protocol SelectionController: class {
   var offset: CGPoint { get set }
   
   var isScrollEnabled: Bool { get set }
+  var isBouncing: Bool { get set }
   var isTracking: Bool { get }
   
   func commit(error: ATHImagePickerError)
-}
-
-internal protocol EmbededController {
-  var holder: SelectionController! { get set }
 }
 
 public protocol PreviewController: FloatingViewLayout {
@@ -94,7 +120,34 @@ open class ATHImagePickerPreviewViewController: UIViewController, EmbededControl
   }
   
   lazy var delegate: CropableScrollViewDelegate<ATHImagePickerPreviewViewController> = {
-    return CropableScrollViewDelegate(cropable: self)
+    let delegate = ATHImagePickerCropableScrollViewDelegate(cropable: self)
+    
+//    delegate.didScroll = {
+//      guard self.view.window != nil && self.isViewLoaded else {
+//        return
+//      }
+//      
+//      DispatchQueue.main.async {
+//        self.holder.isScrollEnabled = false
+//        self.holder.isBouncing = false
+//      }
+//    }
+//    
+//    delegate.didStartScrolling = {
+//      DispatchQueue.main.async {
+//        self.holder.isScrollEnabled = false
+//        self.holder.isBouncing = false
+//      }
+//    }
+//    
+//    delegate.didEndScrolling = {
+//      DispatchQueue.main.async {
+//        self.holder.isScrollEnabled = true
+//        self.holder.isBouncing = true
+//      }
+//    }
+    
+    return delegate
   }()
   
   // MARK: Properties
@@ -157,6 +210,10 @@ open class ATHImagePickerPreviewViewController: UIViewController, EmbededControl
     holder.isScrollEnabled = false
   }
   
+  open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    holder.isScrollEnabled = false
+  }
+  
   open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     holder.isScrollEnabled = true
   }
@@ -198,6 +255,13 @@ extension ATHImagePickerPreviewViewController {
   
   @IBAction func didRecognizeCheckPan(_ rec: UIPanGestureRecognizer) {
     guard !isZooming && !holder.isTracking else { return }
+    
+    holder.isScrollEnabled = false
+    
+    if rec.state == .ended || rec.state == .cancelled {
+      holder.isScrollEnabled = true
+    }
+    
     allowPanOutside = true
   }
 }
