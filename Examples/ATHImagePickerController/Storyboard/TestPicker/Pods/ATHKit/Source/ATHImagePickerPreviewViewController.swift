@@ -121,32 +121,6 @@ open class ATHImagePickerPreviewViewController: UIViewController, EmbededControl
   
   lazy var delegate: CropableScrollViewDelegate<ATHImagePickerPreviewViewController> = {
     let delegate = ATHImagePickerCropableScrollViewDelegate(cropable: self)
-    
-//    delegate.didScroll = {
-//      guard self.view.window != nil && self.isViewLoaded else {
-//        return
-//      }
-//      
-//      DispatchQueue.main.async {
-//        self.holder.isScrollEnabled = false
-//        self.holder.isBouncing = false
-//      }
-//    }
-//    
-//    delegate.didStartScrolling = {
-//      DispatchQueue.main.async {
-//        self.holder.isScrollEnabled = false
-//        self.holder.isBouncing = false
-//      }
-//    }
-//    
-//    delegate.didEndScrolling = {
-//      DispatchQueue.main.async {
-//        self.holder.isScrollEnabled = true
-//        self.holder.isBouncing = true
-//      }
-//    }
-    
     return delegate
   }()
   
@@ -254,14 +228,19 @@ extension ATHImagePickerPreviewViewController {
   }
   
   @IBAction func didRecognizeCheckPan(_ rec: UIPanGestureRecognizer) {
-    guard !isZooming && !holder.isTracking else { return }
-    
-    holder.isScrollEnabled = false
+    if holder.isTracking {
+      UIView.animate(withDuration: 0.3, animations: {
+        self.holder.isScrollEnabled = false
+      })
+    } else {
+      holder.isScrollEnabled = false
+    }
     
     if rec.state == .ended || rec.state == .cancelled {
       holder.isScrollEnabled = true
     }
     
+    guard !isZooming && !holder.isTracking else { return }
     allowPanOutside = true
   }
 }
